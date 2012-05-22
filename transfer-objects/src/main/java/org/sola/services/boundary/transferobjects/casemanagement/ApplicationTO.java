@@ -50,6 +50,7 @@ public class ApplicationTO extends AbstractIdTO {
     private Date assignedDatetime;
     private byte[] location;
     private String statusCode;
+    private int newLots;
     private BigDecimal servicesFee;
     private BigDecimal tax;
     private BigDecimal totalFee;
@@ -137,6 +138,14 @@ public class ApplicationTO extends AbstractIdTO {
 
     public void setLocation(byte[] location) {
         this.location = location;
+    }
+
+    public int getNewLots() {
+        return newLots;
+    }
+
+    public void setNewLots(int newLots) {
+        this.newLots = newLots;
     }
 
     public BigDecimal getServicesFee() {
