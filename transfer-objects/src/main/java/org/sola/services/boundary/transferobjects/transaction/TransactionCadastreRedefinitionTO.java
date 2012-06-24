@@ -34,6 +34,7 @@ package org.sola.services.boundary.transferobjects.transaction;
 import java.util.List;
 import org.sola.services.boundary.transferobjects.cadastre.CadastreObjectNodeTargetTO;
 import org.sola.services.boundary.transferobjects.cadastre.CadastreObjectTargetRedefinitionTO;
+import org.sola.services.boundary.transferobjects.cadastre.SpatialUnitChangeTO;
 
 /**
  *
@@ -44,6 +45,7 @@ public class TransactionCadastreRedefinitionTO extends TransactionTO {
     private List<TransactionSourceTO> transactionSourceList;
     private List<CadastreObjectNodeTargetTO> cadastreObjectNodeTargetList;
     private List<CadastreObjectTargetRedefinitionTO> cadastreObjectTargetList;
+        private List<SpatialUnitChangeTO> spatialUnitChangeList;
 
     public List<TransactionSourceTO> getTransactionSourceList() {
         return transactionSourceList;
@@ -67,5 +69,13 @@ public class TransactionCadastreRedefinitionTO extends TransactionTO {
 
     public void setCadastreObjectTargetList(List<CadastreObjectTargetRedefinitionTO> cadastreObjectTargetList) {
         this.cadastreObjectTargetList = cadastreObjectTargetList;
+    }
+
+    public List<SpatialUnitChangeTO> getSpatialUnitChangeList() {
+        return spatialUnitChangeList;
+    }
+
+    public void setSpatialUnitChangeList(List<SpatialUnitChangeTO> spatialUnitChangeList) {
+        this.spatialUnitChangeList = spatialUnitChangeList;
     }
 }
