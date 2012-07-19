@@ -25,38 +25,55 @@
  */
 package org.sola.services.boundary.wsclients;
 
+import com.sun.xml.ws.developer.JAXWSProperties;
+import com.sun.xml.ws.developer.StreamingAttachmentFeature;
+import javax.activation.DataHandler;
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.soap.MTOMFeature;
+import org.sola.common.FileUtility;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
-import org.sola.webservices.spatial.QueryForNavigation;
-import org.sola.webservices.spatial.ResultForNavigationInfo;
-import org.sola.webservices.spatial.Spatial;
-import org.sola.webservices.spatial.SpatialService;
+import org.sola.webservices.filestreaming.FileStreaming;
+import org.sola.webservices.filestreaming.FilestreamingService;
 
 /**
- * Implementation class for the {@linkplain SpatialClient} interface.
+ * Implementation class for the {@linkplain FileStreamingClient} interface.
  */
-public class SpatialClientImpl extends AbstractWSClientImpl implements SpatialClient {
+public class FileStreamingClientImpl extends AbstractWSClientImpl implements FileStreamingClient {
 
-    private static final String NAMESPACE_URI = "http://webservices.sola.org/spatial";
-    private static final String LOCAL_PART = "spatial-service";
+    private static final String NAMESPACE_URI = "http://webservices.sola.org/filestreaming";
+    private static final String LOCAL_PART = "filestreaming-service";
 
     /**
      * Creates a web service client class for the web service hosted at the specified URL
      *
      * @param url The location of the service WSDL
      */
-    public SpatialClientImpl(String url) {
+    public FileStreamingClientImpl(String url) {
         super(url, new QName(NAMESPACE_URI, LOCAL_PART));
     }
 
-    protected Spatial getPort() {
-        return getPort(Spatial.class, SpatialService.class);
+    protected FileStreaming getPort() {
+        return getPort(FileStreaming.class, FilestreamingService.class,
+                new MTOMFeature(), new StreamingAttachmentFeature(null, true, 4000000L));
+    }
+
+    /**
+     * Sets the request context parameters for the port. Includes setting the username and password
+     * for each request.
+     *
+     * @param port The web service port.
+     */
+    @Override
+    protected void setContextParameters(BindingProvider port) {
+        super.setContextParameters(port);
+        port.getRequestContext().put(JAXWSProperties.HTTP_CLIENT_STREAMING_CHUNK_SIZE, 8192);
     }
 
     @Override
     public boolean checkConnection() throws WebServiceClientException {
         boolean result = false;
-        final String methodName = SpatialClient.CHECK_CONNECTION;
+        final String methodName = FileStreamingClient.CHECK_CONNECTION;
         try {
             beforeWebMethod(methodName);
             result = getPort().checkConnection();
@@ -69,19 +86,35 @@ public class SpatialClientImpl extends AbstractWSClientImpl implements SpatialCl
     }
 
     @Override
-    public ResultForNavigationInfo getSpatialForNavigation(QueryForNavigation query)
-            throws WebServiceClientException {
-        ResultForNavigationInfo result = null;
-        final String methodName = SpatialClient.GET_SPATIAL_FOR_NAVIGATION;
+    public String upload(String pathFileName) throws WebServiceClientException {
+        String result = null;
+        final String methodName = FileStreamingClient.UPLOAD;
         try {
-            beforeWebMethod(methodName, query);
-            result = getPort().getSpatialForNavigation(query);
+            beforeWebMethod(methodName, pathFileName);
+            DataHandler dataHandler = FileUtility.getFileAsStream(pathFileName);
+            if (dataHandler != null) {
+                result = getPort().upload(dataHandler);
+            }
         } catch (Exception e) {
             processException(methodName, e);
         } finally {
-            afterWebMethod(methodName, result, query);
+            afterWebMethod(methodName, result, pathFileName);
         }
         return result;
     }
 
+    @Override
+    public String download(String serverPathFileName, String localFileName) throws WebServiceClientException {
+        String result = null;
+        final String methodName = FileStreamingClient.DOWNLOAD;
+        try {
+            beforeWebMethod(methodName, serverPathFileName, localFileName);
+            result = FileUtility.saveFileFromStream(getPort().download(serverPathFileName), localFileName);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, serverPathFileName, localFileName);
+        }
+        return result;
+    }
 }

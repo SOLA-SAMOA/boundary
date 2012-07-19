@@ -23,21 +23,53 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
-package org.sola.services.boundary.transferobjects.digitalarchive;
+package org.sola.services.boundary.transferobjects.system;
 
-public class DocumentBinaryTO extends DocumentTO {
+import org.sola.services.common.contracts.AbstractTO;
 
-    private String fileName;
+/**
+ * TO for the system.setting table data
+ */
+public class SettingTO extends AbstractTO {
 
-    public DocumentBinaryTO() {
+    private String name;
+    private String value;
+    private boolean active;
+    private String description;
+
+    public SettingTO() {
         super();
     }
 
-    public String getFileName() {
-        return fileName;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
