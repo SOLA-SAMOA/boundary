@@ -50,6 +50,8 @@ public class BaUnitTO extends AbstractIdTO {
     private List<RelatedBaUnitInfoTO> parentBaUnits;
     private String pendingActionCode;
     private BigDecimal calculatedAreaSize;
+    private String village;
+    private String district;
 
     public BigDecimal getCalculatedAreaSize() {
         return calculatedAreaSize;
@@ -57,6 +59,22 @@ public class BaUnitTO extends AbstractIdTO {
 
     public void setCalculatedAreaSize(BigDecimal calculatedAreaSize) {
         this.calculatedAreaSize = calculatedAreaSize;
+    }
+
+    public String getVillage() {
+        return village;
+    }
+
+    public void setVillage(String village) {
+        this.village = village;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
     
     public BaUnitTO(){
