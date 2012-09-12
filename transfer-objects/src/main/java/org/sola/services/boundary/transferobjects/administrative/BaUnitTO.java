@@ -29,6 +29,7 @@ package org.sola.services.boundary.transferobjects.administrative;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.sola.services.boundary.transferobjects.cadastre.CadastreObjectTO;
 import org.sola.services.boundary.transferobjects.casemanagement.SourceTO;
@@ -52,6 +53,8 @@ public class BaUnitTO extends AbstractIdTO {
     private BigDecimal calculatedAreaSize;
     private String village;
     private String district;
+    private String priorTitle;
+    private Date folioRegDate;
 
     public BigDecimal getCalculatedAreaSize() {
         return calculatedAreaSize;
@@ -76,7 +79,23 @@ public class BaUnitTO extends AbstractIdTO {
     public void setDistrict(String district) {
         this.district = district;
     }
-    
+
+    public String getPriorTitle() {
+        return priorTitle;
+    }
+
+    public void setPriorTitle(String priorTitle) {
+        this.priorTitle = priorTitle;
+    }
+
+    public Date getFolioRegDate() {
+        return folioRegDate;
+    }
+
+    public void setFolioRegDate(Date folioRegDate) {
+        this.folioRegDate = folioRegDate;
+    }
+
     public BaUnitTO(){
         super();
     }
