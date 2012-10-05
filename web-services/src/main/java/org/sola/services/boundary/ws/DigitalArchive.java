@@ -93,7 +93,7 @@ public class DigitalArchive extends AbstractWebService {
                 DocumentBinaryTO docTO = GenericTranslator.toTO(document, DocumentBinaryTO.class);
                 // Write the fileContent to disk so that it can be efficiently streamed up to the client 
                 // using the FileStreaming service. 
-                if (document.getBody() != null) {
+                if (document != null && document.getBody() != null) {
                     File file = FileUtility.writeFileToCache(document.getBody(), null);
                     if (file != null) {
                         docTO.setFileName(file.getAbsolutePath());

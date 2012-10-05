@@ -88,11 +88,13 @@ public class DigitalArchiveClientImpl extends AbstractWSClientImpl implements Di
         final String methodName = DigitalArchiveClient.GET_DOCUMENT;
         try {
             beforeWebMethod(methodName, documentId);
-            result = getPort().getDocument(documentId); 
-            String localFileName = FileUtility.generateFileName(result.getNr(),
-                    result.getRowVersion(), result.getExtension());
-            localFileName = getFS().download(result.getFileName(), localFileName);
-            result.setFileName(localFileName);
+            result = getPort().getDocument(documentId);
+            if (result != null) {
+                String localFileName = FileUtility.generateFileName(result.getNr(),
+                        result.getRowVersion(), result.getExtension());
+                localFileName = getFS().download(result.getFileName(), localFileName);
+                result.setFileName(localFileName);
+            }
         } catch (Exception e) {
             processException(methodName, e);
         } finally {
@@ -155,8 +157,10 @@ public class DigitalArchiveClientImpl extends AbstractWSClientImpl implements Di
         try {
             beforeWebMethod(methodName, fileName);
             result = getPort().getFileBinary(fileName);
-            fileName = getFS().download(result.getName(), fileName);
-            result.setName(fileName);
+            if (result != null) {
+                fileName = getFS().download(result.getName(), fileName);
+                result.setName(fileName);
+            }
         } catch (Exception e) {
             processException(methodName, e);
         } finally {
