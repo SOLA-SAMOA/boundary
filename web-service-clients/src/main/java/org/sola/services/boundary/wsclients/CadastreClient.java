@@ -30,8 +30,10 @@ import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
 import org.sola.webservices.transferobjects.ValidationResult;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectNodeTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
+import org.sola.webservices.transferobjects.cadastre.UnitParcelGroupTO;
 import org.sola.webservices.transferobjects.transaction.TransactionCadastreChangeTO;
 import org.sola.webservices.transferobjects.transaction.TransactionCadastreRedefinitionTO;
+import org.sola.webservices.transferobjects.transaction.TransactionUnitParcelsTO;
 
 /**
  * Interface for the Cadastre Service. Implemented by {@linkplain CadastreClientImpl}. To obtain a
@@ -54,7 +56,7 @@ public interface CadastreClient extends AbstractWSClient {
      * Cadastre.getCadastreObjectByParts - Identifier for the getCadastreObjectByParts method
      */
     public static final String GET_CADASTRE_OBJECT_BY_PARTS = SERVICE_NAME + "getCadastreObjectByParts";
-   /**
+    /**
      * Cadastre.getCadastreObjectByParts - Identifier for the getCadastreObjectByParts method
      */
     public static final String GET_CADASTRE_OBJECT_BY_ALL_PARTS = SERVICE_NAME + "getCadastreObjectByAllParts";
@@ -103,6 +105,19 @@ public interface CadastreClient extends AbstractWSClient {
      * getTransactionCadastreRedefinition method
      */
     public static final String GET_TRANSACTION_CADASTRE_REDFN = SERVICE_NAME + "getTransactionCadastreRedefinition";
+    /**
+     * Cadastre.getTransactionUnitParcels - Identifier for the getTransactionUnitParcels method
+     */
+    public static final String GET_TRANSACTION_UNIT_PARCELS = SERVICE_NAME + "getTransactionUnitParcels";
+    /**
+     * Cadastre.getUnitParcelGroupByParcelId - Identifier for the getUnitParcelGroupByParcelId
+     * method
+     */
+    public static final String GET_UNIT_PARCELS_BY_PARCEL_ID = SERVICE_NAME + "getUnitParcelGroupByParcelId";
+    /**
+     * Cadastre.saveUnitParcels - Identifier for the saveUnitParcels method
+     */
+    public static final String SAVE_UNIT_PARCELS = SERVICE_NAME + "saveUnitParcels";
 
     /**
      * Returns a maximum of 10 cadastre objects that have a name first part and/or name last part
@@ -115,10 +130,11 @@ public interface CadastreClient extends AbstractWSClient {
      */
     List<CadastreObjectTO> getCadastreObjectByParts(String searchString)
             throws WebServiceClientException;
-     /**
-     * Returns a maximum of 10 cadastre objects with current or pending status that have a name first part and/or name last part
-     * that matches the specified search string. This method supports partial matches and is case
-     * insensitive.
+
+    /**
+     * Returns a maximum of 10 cadastre objects with current or pending status that have a name
+     * first part and/or name last part that matches the specified search string. This method
+     * supports partial matches and is case insensitive.
      *
      * @param searchString The search string to use
      * @return The list of cadastre objects matching the search string
@@ -127,7 +143,6 @@ public interface CadastreClient extends AbstractWSClient {
     List<CadastreObjectTO> getCadastreObjectByAllParts(String searchString)
             throws WebServiceClientException;
 
-    
     /**
      * Returns the cadastre object that is located at the point specified or null if there is no
      * cadastre object at that location. Uses the PostGIS ST_Intersects function to perform the
@@ -214,4 +229,31 @@ public interface CadastreClient extends AbstractWSClient {
      * @param transactionId The identifier of the transaction
      */
     TransactionCadastreRedefinitionTO getTransactionCadastreRedefinition(String serviceId);
+
+    /**
+     * Retrieves a Unit Parcel transaction for the given service id
+     *
+     * @param serviceId The service to retrieve the unit parcels for.
+     * @return The Unit Parcel transaction or NULL if no transaction exists.
+     */
+    TransactionUnitParcelsTO getTransactionUnitParcels(String serviceId);
+
+    /**
+     * Retrieves the Unit Parcel Group for the given spatial unit. Note that spatial unit group is
+     * used by SOLA Samoa to group parcels created for a Unit Plan Development.
+     *
+     * @param parcelId The identifier (cadastre object id) of one of the spatial units that is part
+     * of the unit plan development
+     * @return The UnitParcelGroup for the parcel or null if there is no such development.
+     */
+    UnitParcelGroupTO getUnitParcelGroupByParcelId(String parcelId);
+
+    /**
+     * Validates and saves a Unit Parcel transaction including any new unit parcels created for the
+     * Unit Plan Development.
+     *
+     * @param transactionUnitParcelsTO The unit parcel transaction details to save
+     * @return The list of validation messages.
+     */
+    List<ValidationResult> saveUnitParcels(TransactionUnitParcelsTO transactionUnitParcelsTO);
 }

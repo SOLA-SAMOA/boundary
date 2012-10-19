@@ -33,8 +33,10 @@ import org.sola.webservices.cadastre.CadastreService;
 import org.sola.webservices.transferobjects.ValidationResult;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectNodeTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
+import org.sola.webservices.transferobjects.cadastre.UnitParcelGroupTO;
 import org.sola.webservices.transferobjects.transaction.TransactionCadastreChangeTO;
 import org.sola.webservices.transferobjects.transaction.TransactionCadastreRedefinitionTO;
+import org.sola.webservices.transferobjects.transaction.TransactionUnitParcelsTO;
 
 /**
  * Implementation class for the {@linkplain CadastreClient} interface.
@@ -87,9 +89,8 @@ public class CadastreClientImpl extends AbstractWSClientImpl implements Cadastre
         }
         return result;
     }
-    
-    
-     @Override
+
+    @Override
     public List<CadastreObjectTO> getCadastreObjectByAllParts(String searchString)
             throws WebServiceClientException {
         List<CadastreObjectTO> result = null;
@@ -105,7 +106,6 @@ public class CadastreClientImpl extends AbstractWSClientImpl implements Cadastre
         return result;
     }
 
-    
     @Override
     public CadastreObjectTO getCadastreObjectByPoint(
             double x, double y, int srid, String typeCode)
@@ -271,6 +271,55 @@ public class CadastreClientImpl extends AbstractWSClientImpl implements Cadastre
             processException(methodName, e);
         } finally {
             afterWebMethod(methodName, result, serviceId);
+        }
+        return result;
+    }
+
+    @Override
+    public TransactionUnitParcelsTO getTransactionUnitParcels(String serviceId) 
+            throws WebServiceClientException {
+        TransactionUnitParcelsTO result = null;
+        final String methodName = CadastreClient.GET_TRANSACTION_UNIT_PARCELS;
+        try {
+            beforeWebMethod(methodName, serviceId);
+            result = getPort().getTransactionUnitParcels(serviceId);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, serviceId);
+        }
+        return result;
+    }
+    
+    @Override
+    public UnitParcelGroupTO getUnitParcelGroupByParcelId(String parcelId) 
+            throws WebServiceClientException {
+        UnitParcelGroupTO result = null;
+        final String methodName = CadastreClient.GET_UNIT_PARCELS_BY_PARCEL_ID;
+        try {
+            beforeWebMethod(methodName, parcelId);
+            result = getPort().getUnitParcelGroupByParcelId(parcelId);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, parcelId);
+        }
+        return result;
+    }
+
+    @Override
+    public List<ValidationResult> saveUnitParcels(TransactionUnitParcelsTO transactionUnitParcelsTO) 
+            throws WebServiceClientException {
+        List<ValidationResult> result = null;
+        final String methodName = CadastreClient.SAVE_UNIT_PARCELS;
+        String languageCode = getLanguageCode();
+        try {
+            beforeWebMethod(methodName, transactionUnitParcelsTO, languageCode);
+            result = getPort().saveUnitParcels(transactionUnitParcelsTO, languageCode);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, transactionUnitParcelsTO, languageCode);
         }
         return result;
     }

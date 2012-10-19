@@ -34,8 +34,10 @@ import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import org.sola.services.boundary.transferobjects.cadastre.CadastreObjectNodeTO;
 import org.sola.services.boundary.transferobjects.cadastre.CadastreObjectTO;
+import org.sola.services.boundary.transferobjects.cadastre.UnitParcelGroupTO;
 import org.sola.services.boundary.transferobjects.transaction.TransactionCadastreChangeTO;
 import org.sola.services.boundary.transferobjects.transaction.TransactionCadastreRedefinitionTO;
+import org.sola.services.boundary.transferobjects.transaction.TransactionUnitParcelsTO;
 import org.sola.services.common.ServiceConstants;
 import org.sola.services.common.br.ValidationResult;
 import org.sola.services.common.contracts.GenericTranslator;
@@ -46,6 +48,7 @@ import org.sola.services.ejb.transaction.businesslogic.TransactionEJBLocal;
 import org.sola.services.ejb.transaction.repository.entities.TransactionCadastreChange;
 import org.sola.services.ejb.transaction.repository.entities.TransactionCadastreRedefinition;
 import org.sola.services.ejb.transaction.repository.entities.TransactionType;
+import org.sola.services.ejb.transaction.repository.entities.TransactionUnitParcels;
 
 /**
  * Web Service Boundary class to expose {@linkplain org.sola.services.ejb.cadastre.businesslogic.CadastreEJB}
@@ -99,8 +102,8 @@ public class Cadastre extends AbstractWebService {
 
         return (List<CadastreObjectTO>) result[0];
     }
-    
-     /**
+
+    /**
      * See {@linkplain org.sola.services.ejb.cadastre.businesslogic.CadastreEJB#getCadastreObjectByAllParts(java.lang.String)
      * CadastreEJB.getCadastreObjectByAllParts}
      *
@@ -406,8 +409,7 @@ public class Cadastre extends AbstractWebService {
      */
     @WebMethod(operationName = "SaveCadastreRedefinition")
     public List<ValidationResult> SaveCadastreRedefinition(
-            @WebParam(name = "transactionCadastreRedefinitionTO") 
-                    TransactionCadastreRedefinitionTO transactionTO,
+            @WebParam(name = "transactionCadastreRedefinitionTO") TransactionCadastreRedefinitionTO transactionTO,
             @WebParam(name = "languageCode") String languageCode)
             throws SOLAValidationFault, OptimisticLockingFault,
             SOLAFault, UnhandledFault, SOLAAccessFault {
@@ -423,7 +425,7 @@ public class Cadastre extends AbstractWebService {
                 TransactionCadastreRedefinition targetTransaction =
                         transactionEJB.getTransactionById(
                         transactionTOTmp.getId(), TransactionCadastreRedefinition.class);
-                TransactionCadastreRedefinition transactionCadastreRedefinition = 
+                TransactionCadastreRedefinition transactionCadastreRedefinition =
                         GenericTranslator.fromTO(
                         transactionTOTmp, TransactionCadastreRedefinition.class, targetTransaction);
 
@@ -465,4 +467,103 @@ public class Cadastre extends AbstractWebService {
 
         return (TransactionCadastreRedefinitionTO) result[0];
     }
+
+    /**
+     * See {@linkplain org.sola.services.ejb.cadastre.businesslogic.CadastreEJB#getUnitParcelGroupByParcelId(String)
+     * CadastreEJB.getUnitParcelGroupByParcelId}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "GetUnitParcelGroupByParcelId")
+    public UnitParcelGroupTO GetUnitParcelGroupByParcelId(
+            @WebParam(name = "parcelId") String parcelId)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String parcelIdTmp = parcelId;
+        final Object[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = GenericTranslator.toTO(
+                        cadastreEJB.getUnitParcelGroupByParcelId(parcelIdTmp), UnitParcelGroupTO.class);
+            }
+        });
+
+        return (UnitParcelGroupTO) result[0];
+    }
+    
+     /**
+     * See {@linkplain org.sola.services.ejb.transaction.businesslogic.TransactionEJB#getTransactionByServiceId(java.lang.String,
+     * boolean, java.lang.Class)
+     * TransactionEJB.getTransactionByServiceId}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "GetTransactionUnitParcels")
+    public TransactionUnitParcelsTO GetTransactionUnitParcels(
+            @WebParam(name = "serviceId") String serviceId)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String serviceIdTmp = serviceId;
+        final Object[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = GenericTranslator.toTO(
+                        transactionEJB.getTransactionByServiceId(serviceIdTmp, true, 
+                        TransactionUnitParcels.class), TransactionUnitParcelsTO.class);
+            }
+        });
+
+        return (TransactionUnitParcelsTO) result[0];
+    }
+    
+        /**
+     * See {@linkplain org.sola.services.ejb.transaction.businesslogic.TransactionEJB#saveTransaction(org.sola.services.ejb.transaction.repository.entities.TransactionBasic,
+     * java.lang.String, java.lang.String) TransactionEJB.saveTransaction}
+     *
+     * @throws SOLAValidationFault
+     * @throws OptimisticLockingFault
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "SaveUnitParcels")
+    public List<ValidationResult> SaveUnitParcels(
+            @WebParam(name = "transactionUnitParcelsTO") TransactionUnitParcelsTO transactionTO,
+            @WebParam(name = "languageCode") String languageCode)
+            throws SOLAValidationFault, OptimisticLockingFault,
+            SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final TransactionUnitParcelsTO transactionTOTmp = transactionTO;
+        final String languageCodeTmp = languageCode;
+        final Object[] result = {null};
+
+        runUpdateValidation(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                TransactionUnitParcels targetTransaction =
+                        transactionEJB.getTransactionById(
+                        transactionTOTmp.getId(), TransactionUnitParcels.class);
+                TransactionUnitParcels transactionUnitParcels =
+                        GenericTranslator.fromTO(
+                        transactionTOTmp, TransactionUnitParcels.class, targetTransaction);
+
+                result[0] = transactionEJB.saveTransaction(transactionUnitParcels,
+                        TransactionType.RECORD_UNIT_PLAN, languageCodeTmp);
+            }
+        });
+
+        return (List<ValidationResult>) result[0];
+    }
+
 }

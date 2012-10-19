@@ -32,8 +32,10 @@ import org.sola.webservices.cadastre.*;
 import org.sola.webservices.transferobjects.ValidationResult;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectNodeTO;
 import org.sola.webservices.transferobjects.cadastre.CadastreObjectTO;
+import org.sola.webservices.transferobjects.cadastre.UnitParcelGroupTO;
 import org.sola.webservices.transferobjects.transaction.TransactionCadastreChangeTO;
 import org.sola.webservices.transferobjects.transaction.TransactionCadastreRedefinitionTO;
+import org.sola.webservices.transferobjects.transaction.TransactionUnitParcelsTO;
 
 /**
  * Provides a mock implementation for the
@@ -164,8 +166,8 @@ public class MockCadastrePort implements Cadastre {
             return null;
         }
     }
-    
-     /**
+
+    /**
      * Response Key = CadastreClient.GET_CADASTRE_OBJECT_BY_ALL_PARTS
      *
      * @return default = new ArrayList<CadastreObjectTO>()
@@ -183,7 +185,6 @@ public class MockCadastrePort implements Cadastre {
         }
     }
 
-    
     /**
      * Response Key = CadastreClient.GET_CADASTRE_OBJECT_BY_POINT
      *
@@ -281,7 +282,7 @@ public class MockCadastrePort implements Cadastre {
      */
     @Override
     public CadastreObjectNodeTO getCadastreObjectNode(double xMin, double yMin, double xMax,
-            double yMax, int srid, String cadastreObjectType) 
+            double yMax, int srid, String cadastreObjectType)
             throws SOLAAccessFault, SOLAFault, UnhandledFault {
         CadastreObjectNodeTO defaultResponse = new CadastreObjectNodeTO();
         try {
@@ -339,7 +340,7 @@ public class MockCadastrePort implements Cadastre {
      */
     @Override
     public CadastreObjectNodeTO getCadastreObjectNodePotential(double xMin, double yMin,
-            double xMax, double yMax, int srid, String cadastreObjectType) 
+            double xMax, double yMax, int srid, String cadastreObjectType)
             throws SOLAAccessFault, SOLAFault, UnhandledFault {
         CadastreObjectNodeTO defaultResponse = new CadastreObjectNodeTO();
         try {
@@ -366,6 +367,61 @@ public class MockCadastrePort implements Cadastre {
                     TransactionCadastreRedefinitionTO.class, defaultResponse, serviceId);
         } catch (Exception ex) {
             processExceptionAccess(ex);
+            return null;
+        }
+    }
+
+    /**
+     * Response Key = CadastreClient.GET_TRANSACTION_UNIT_PARCELS
+     *
+     * @return default = new TransactionUnitParcelsTO()
+     */
+    @Override
+    public TransactionUnitParcelsTO getTransactionUnitParcels(String serviceId)
+            throws SOLAAccessFault, SOLAFault, UnhandledFault {
+        TransactionUnitParcelsTO defaultResponse = new TransactionUnitParcelsTO();
+        try {
+            return getManager().getResponse(CadastreClient.GET_TRANSACTION_UNIT_PARCELS,
+                    TransactionUnitParcelsTO.class, defaultResponse, serviceId);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return null;
+        }
+    }
+
+    /**
+     * Response Key = CadastreClient.GET_UNIT_PARCELS_BY_PARCEL_ID
+     *
+     * @return default = new UnitParcelGroupTO()
+     */
+    @Override
+    public UnitParcelGroupTO getUnitParcelGroupByParcelId(String parcelId)
+            throws SOLAAccessFault, SOLAFault, UnhandledFault {
+        UnitParcelGroupTO defaultResponse = new UnitParcelGroupTO();
+        try {
+            return getManager().getResponse(CadastreClient.GET_UNIT_PARCELS_BY_PARCEL_ID,
+                    UnitParcelGroupTO.class, defaultResponse, parcelId);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return null;
+        }
+    }
+
+    /**
+     * Response Key = CadastreClient.SAVE_UNIT_PARCELS
+     *
+     * @return default = new ArrayList<ValidationResult>()
+     */
+    @Override
+    public List<ValidationResult> saveUnitParcels(TransactionUnitParcelsTO transactionUnitParcelsTO,
+            String languageCode) throws OptimisticLockingFault, SOLAAccessFault, SOLAFault,
+            SOLAValidationFault, UnhandledFault {
+        List<ValidationResult> defaultResponse = new ArrayList<ValidationResult>();
+        try {
+            return getManager().getResponse(CadastreClient.SAVE_UNIT_PARCELS,
+                    List.class, defaultResponse, transactionUnitParcelsTO, languageCode);
+        } catch (Exception ex) {
+            processExceptionAll(ex);
             return null;
         }
     }
