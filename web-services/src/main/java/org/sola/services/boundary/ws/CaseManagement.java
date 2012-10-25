@@ -48,9 +48,7 @@ import org.sola.services.ejb.application.repository.entities.Service;
 import org.sola.services.ejb.party.businesslogic.PartyEJBLocal;
 import org.sola.services.common.ServiceConstants;
 import org.sola.services.common.faults.SOLAAccessFault;
-import org.sola.services.ejb.application.repository.entities.LodgementTiming;
-import org.sola.services.ejb.application.repository.entities.LodgementView;
-import org.sola.services.ejb.application.repository.entities.LodgementViewParams;
+import org.sola.services.ejb.application.repository.entities.*;
 import org.sola.services.ejb.party.repository.entities.Party;
 import org.sola.services.ejb.source.businesslogic.SourceEJBLocal;
 import org.sola.services.ejb.source.repository.entities.PowerOfAttorney;
@@ -58,11 +56,11 @@ import org.sola.services.ejb.source.repository.entities.Source;
 import org.sola.services.ejb.system.businesslogic.SystemEJBLocal;
 
 /**
- * Web Service Boundary class to expose Case Management functionality available on  
- * {@linkplain org.sola.services.ejb.application.businesslogic.ApplicationEJB}, 
- * {@linkplain org.sola.services.ejb.party.businesslogic.PartyEJB}, 
+ * Web Service Boundary class to expose Case Management functionality available on
+ * {@linkplain org.sola.services.ejb.application.businesslogic.ApplicationEJB},
+ * {@linkplain org.sola.services.ejb.party.businesslogic.PartyEJB},
  * {@linkplain org.sola.services.ejb.source.businesslogic.SourceEJB} and
- * {@linkplain org.sola.services.ejb.address.businesslogic.AddressEJB}. 
+ * {@linkplain org.sola.services.ejb.address.businesslogic.AddressEJB}.
  */
 @WebService(serviceName = "casemanagement-service", targetNamespace = ServiceConstants.CASE_MAN_WS_NAMESPACE)
 public class CaseManagement extends AbstractWebService {
@@ -493,7 +491,7 @@ public class CaseManagement extends AbstractWebService {
             @WebParam(name = "powerOfAttorney") final PowerOfAttorneyTO powerOfAttorney,
             @WebParam(name = "languageCode") final String languageCode)
             throws SOLAValidationFault, OptimisticLockingFault, SOLAFault, UnhandledFault, SOLAAccessFault {
-        
+
         final Object[] result = {null};
 
         runUpdateValidation(wsContext, new Runnable() {
@@ -502,14 +500,14 @@ public class CaseManagement extends AbstractWebService {
             public void run() {
                 result[0] = GenericTranslator.toTO(
                         sourceEJB.attachPowerOfAttorneyToTransaction(
-                        serviceId, GenericTranslator.fromTO(powerOfAttorney, 
+                        serviceId, GenericTranslator.fromTO(powerOfAttorney,
                         PowerOfAttorney.class, null), languageCode), PowerOfAttorneyTO.class);
             }
         });
 
         return (PowerOfAttorneyTO) result[0];
     }
-    
+
     /**
      * See {@linkplain org.sola.services.ejb.source.businesslogic.SourceEJB#dettachSourceFromTransaction(java.lang.String)
      * SourceEJB.dettachSourceFromTransaction}
@@ -596,7 +594,7 @@ public class CaseManagement extends AbstractWebService {
 
         return (List<PowerOfAttorneyTO>) result[0];
     }
-    
+
     /**
      * See {@linkplain org.sola.services.ejb.source.businesslogic.SourceEJB#getSources(java.util.List)
      * SourceEJB.getSources}
@@ -652,7 +650,7 @@ public class CaseManagement extends AbstractWebService {
 
         return (SourceTO) result[0];
     }
-    
+
     /**
      * See {@linkplain org.sola.services.ejb.source.businesslogic.SourceEJB#getSourceById(java.lang.String)
      * SourceEJB.getSourceById}
@@ -680,7 +678,9 @@ public class CaseManagement extends AbstractWebService {
         return (PowerOfAttorneyTO) result[0];
     }
 
-    /** Returns {@link ApplicationTO} by the given transaction ID. */
+    /**
+     * Returns {@link ApplicationTO} by the given transaction ID.
+     */
     @WebMethod(operationName = "getApplicationByTransactionId")
     public ApplicationTO getApplicationByTransactionId(
             @WebParam(name = "transactionId") final String transactionId) throws SOLAFault, UnhandledFault,
@@ -699,7 +699,7 @@ public class CaseManagement extends AbstractWebService {
 
         return (ApplicationTO) result[0];
     }
-            
+
     /**
      * See {@linkplain org.sola.services.ejb.application.businesslogic.ApplicationEJB#serviceActionComplete(java.lang.String, java.lang.String, int)
      * ApplicationEJB.serviceActionComplete}
@@ -1289,5 +1289,36 @@ public class CaseManagement extends AbstractWebService {
         });
 
         return (ServiceTO) result[0];
+    }
+
+    /**
+     * See {@linkplain org.sola.services.ejb.application.businesslogic.ApplicationEJB#getWorkSummary(java.util.Date, java.util.Date)
+     * ApplicationEJB.getWorkSummary}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "GetWorkSummary")
+    public List<WorkSummaryTO> getWorkSummary(
+            @WebParam(name = "paramsTO") LodgementViewParamsTO paramsTO)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final LodgementViewParamsTO paramsTOTmp = paramsTO;
+        final Object[] result = {null};
+
+        if (paramsTO != null) {
+            runGeneralQuery(wsContext, new Runnable() {
+
+                @Override
+                public void run() {
+                    List<WorkSummary> appList = applicationEJB.getWorkSummary(paramsTOTmp.getFromDate(),
+                            paramsTOTmp.getToDate());
+                    result[0] = GenericTranslator.toTOList(
+                            appList, WorkSummaryTO.class);
+                }
+            });
+        }
+        return (List<WorkSummaryTO>) result[0];
     }
 }

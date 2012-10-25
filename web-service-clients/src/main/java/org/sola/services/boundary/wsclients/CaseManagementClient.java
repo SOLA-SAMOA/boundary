@@ -98,11 +98,11 @@ public interface CaseManagementClient extends AbstractWSClient {
      */
     public static final String SAVE_PARTY = SERVICE_NAME + "saveParty";
     /**
-     * CaseManagement.attachPowerOfAttorneyToTransaction - Identifier for the attachPowerOfAttorneyToTransaction
-     * method
+     * CaseManagement.attachPowerOfAttorneyToTransaction - Identifier for the
+     * attachPowerOfAttorneyToTransaction method
      */
     public static final String ATTACH_POWER_OF_ATTORNEY_TO_TRANSACTION = SERVICE_NAME + "attachPowerOfAttorneyToTransaction";
-        /**
+    /**
      * CaseManagement.attachSourceToTransaction - Identifier for the attachSourceToTransaction
      * method
      */
@@ -117,7 +117,8 @@ public interface CaseManagementClient extends AbstractWSClient {
      */
     public static final String GET_SOURCES_BY_SERVICE_ID = SERVICE_NAME + "getSourcesByServiceId";
     /**
-     * CaseManagement.getPowerOfAttorneyByServiceId - Identifier for the getPowerOfAttorneyByServiceId method
+     * CaseManagement.getPowerOfAttorneyByServiceId - Identifier for the
+     * getPowerOfAttorneyByServiceId method
      */
     public static final String GET_POWER_OF_ATTORNEY_BY_SERVICE_ID = SERVICE_NAME + "getSourcesByServiceId";
     /**
@@ -128,9 +129,7 @@ public interface CaseManagementClient extends AbstractWSClient {
      * CaseManagement.getSourceById - Identifier for the getSourceById method
      */
     public static final String GET_SOURCE_BY_ID = SERVICE_NAME + "getSourceById";
-    
     public static final String GET_POWER_OF_ATTORNEY_BY_ID = SERVICE_NAME + "getPowerOfAttorneyById";
-    
     public static final String GET_APPLICATION_BY_TRANSACTION_ID = SERVICE_NAME + "getApplicationByTransactionId";
     /**
      * CaseManagement.serviceActionComplete - Identifier for the serviceActionComplete method
@@ -210,6 +209,10 @@ public interface CaseManagementClient extends AbstractWSClient {
      * CaseManagement.getUserActions - Identifier for the getUserActions method
      */
     public static final String GET_USER_ACTIONS = SERVICE_NAME + "getUserActions";
+    /**
+     * CaseManagement.getWorkSummary - Identifier for the getWorkSummary method
+     */
+    public static final String GET_WORK_SUMMARY = SERVICE_NAME + "getWorkSummary";
 
     /**
      * Calculates the lodgement fees as well as the expected completions dates for each service as
@@ -341,7 +344,7 @@ public interface CaseManagementClient extends AbstractWSClient {
      */
     SourceTO attachSourceToTransaction(String serviceId, String sourceId)
             throws WebServiceClientException;
-    
+
     /**
      * Associates a Power of attorney with a transaction and sets the related source status to
      * <code>pending</code>. Also validates the source to ensure it does not have any other pending
@@ -657,16 +660,16 @@ public interface CaseManagementClient extends AbstractWSClient {
      */
     List<ApplicationLogTO> getUserActions(String userName, XMLGregorianCalendar from, XMLGregorianCalendar to)
             throws WebServiceClientException;
-    
+
     /**
-     * Retrieves all power of attorney documents associated with the service. 
-     * Uses the transaction associated with the service to determine the documents to return.
+     * Retrieves all power of attorney documents associated with the service. Uses the transaction
+     * associated with the service to determine the documents to return.
      *
      * @param serviceId Identifier of the service
      * @throws WebServiceClientException
      */
     List<PowerOfAttorneyTO> getPowerOfAttorneyByServiceId(String serviceId) throws WebServiceClientException;
-    
+
     /**
      * Returns the details for the specified Power of attorney.
      *
@@ -677,6 +680,18 @@ public interface CaseManagementClient extends AbstractWSClient {
      */
     PowerOfAttorneyTO getPowerOfAttorneyById(String id) throws WebServiceClientException;
 
-    /** Returns {@link ApplicationTO} by the given transaction ID. */
+    /**
+     * Returns {@link ApplicationTO} by the given transaction ID.
+     */
     ApplicationTO getApplicationByTransactionId(String transactionId) throws WebServiceClientException;
+
+    /**
+     * Samoa Customization. Retrieves a summary of the services processed during the specified
+     * reporting period. <p>Requires the {@linkplain RolesConstants#REPORTS_VIEW} role.</p>
+     *
+     * @param paramsTO The date parameters for the report.
+     * @return The data for the Lodgement Report report
+     * @throws WebServiceClientException
+     */
+    List<WorkSummaryTO> getWorkSummary(LodgementViewParamsTO paramsTO) throws WebServiceClientException;
 }
