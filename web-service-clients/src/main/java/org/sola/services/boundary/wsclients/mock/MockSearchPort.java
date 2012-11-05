@@ -389,12 +389,47 @@ public class MockSearchPort implements Search {
      * @return default = new ArrayList<SourceSearchResultTO>()
      */
     @Override
-    public List<PowerOfAttorneySearchResultTO> searchPowerOfAttorney(PowerOfAttorneySearchParamsTO searchParams) 
+    public List<PowerOfAttorneySearchResultTO> searchPowerOfAttorney(PowerOfAttorneySearchParamsTO searchParams)
             throws SOLAAccessFault, SOLAFault, UnhandledFault {
         List<PowerOfAttorneySearchResultTO> defaultResponse = new ArrayList<PowerOfAttorneySearchResultTO>();
         try {
             return getManager().getResponse(SearchClient.SEARCH_POWER_OF_ATTORNEY,
                     List.class, defaultResponse, searchParams);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return null;
+        }
+    }
+
+    /**
+     * Response Key = SearchClient.GET_UNIT_DEVELOPMENT_NR
+     *
+     * @return default = null
+     */
+    @Override
+    public String getUnitDevelopmentNr(String serviceId, List<String> baUnitIds) throws SOLAAccessFault, SOLAFault, UnhandledFault {
+        String defaultResponse = null;
+        try {
+            return getManager().getResponse(SearchClient.GET_UNIT_DEVELOPMENT_NR,
+                    String.class, defaultResponse, serviceId, baUnitIds);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return null;
+        }
+    }
+
+    /**
+     * Response Key = SearchClient.GET_STRATA_PROPERTIES
+     *
+     * @return default = new ArrayList<StrataPropertyTO>()
+     */
+    @Override
+    public List<StrataPropertyTO> getStrataProperties(String unitParcelGroupName, List<String> baUnitIds)
+            throws SOLAAccessFault, SOLAFault, UnhandledFault {
+        List<StrataPropertyTO> defaultResponse = new ArrayList<StrataPropertyTO>();
+        try {
+            return getManager().getResponse(SearchClient.GET_STRATA_PROPERTIES,
+                    List.class, defaultResponse, unitParcelGroupName, baUnitIds);
         } catch (Exception ex) {
             processExceptionAccess(ex);
             return null;

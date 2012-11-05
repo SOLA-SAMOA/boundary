@@ -115,6 +115,11 @@ public interface CadastreClient extends AbstractWSClient {
      */
     public static final String GET_UNIT_PARCELS_BY_PARCEL_ID = SERVICE_NAME + "getUnitParcelGroupByParcelId";
     /**
+     * Cadastre.getUnitParcelGroupByName - Identifier for the getUnitParcelGroupByName
+     * method
+     */
+    public static final String GET_UNIT_PARCELS_BY_NAME = SERVICE_NAME + "getUnitParcelGroupByName";
+    /**
      * Cadastre.saveUnitParcels - Identifier for the saveUnitParcels method
      */
     public static final String SAVE_UNIT_PARCELS = SERVICE_NAME + "saveUnitParcels";
@@ -247,6 +252,15 @@ public interface CadastreClient extends AbstractWSClient {
      * @return The UnitParcelGroup for the parcel or null if there is no such development.
      */
     UnitParcelGroupTO getUnitParcelGroupByParcelId(String parcelId);
+
+    /**
+     * Retrieves the Unit Parcel Group for the group name. Note that spatial unit group is used by
+     * SOLA Samoa to group parcels created for a Unit Plan Development.
+     *
+     * @param groupName The name given to the Unit Parcel Group (the application number)
+     * @return The UnitParcelGroup for the group name or null if there is no such development.
+     */
+    UnitParcelGroupTO getUnitParcelGroupByName(String groupName);
 
     /**
      * Validates and saves a Unit Parcel transaction including any new unit parcels created for the

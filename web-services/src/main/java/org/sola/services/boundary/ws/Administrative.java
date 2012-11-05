@@ -43,6 +43,7 @@ import org.sola.services.ejb.administrative.businesslogic.AdministrativeEJB;
 import org.sola.services.ejb.administrative.businesslogic.AdministrativeEJBLocal;
 import org.sola.services.ejb.administrative.repository.entities.BaUnit;
 import org.sola.services.ejb.administrative.repository.entities.BaUnitArea;
+import org.sola.services.ejb.cadastre.businesslogic.CadastreEJBLocal;
 import org.sola.services.ejb.transaction.businesslogic.TransactionEJBLocal;
 import org.sola.services.ejb.transaction.repository.entities.TransactionBasic;
 
@@ -56,6 +57,8 @@ public class Administrative extends AbstractWebService {
     private AdministrativeEJBLocal administrativeEJB;
     @EJB
     private TransactionEJBLocal transactionEJB;
+    @EJB
+    private CadastreEJBLocal cadastreEJB;
     @Resource
     private WebServiceContext wsContext;
 
@@ -269,11 +272,11 @@ public class Administrative extends AbstractWebService {
     }
 
     /**
-     * See {@linkplain AdministrativeEJB#getBaUnitByCode(java.lang.String, java.lang.String) 
+     * See {@linkplain AdministrativeEJB#getBaUnitByCode(java.lang.String, java.lang.String)
      * AdministrativeEJB.getBaUnitByCode}
-
+     *
      * @throws SOLAFault
-     * @throws UnhandledFault 
+     * @throws UnhandledFault
      */
     @WebMethod(operationName = "GetBaUnitByCode")
     public BaUnitTO GetBaUnitByCode(
@@ -297,13 +300,13 @@ public class Administrative extends AbstractWebService {
 
         return (BaUnitTO) result[0];
     }
-    
-     /**
-     * See {@linkplain AdministrativeEJB#getBaUnitAreas(java.lang.String) 
-     * AdministrativeEJB.getBaUnitAreas}
 
+    /**
+     * See {@linkplain AdministrativeEJB#getBaUnitAreas(java.lang.String)
+     * AdministrativeEJB.getBaUnitAreas}
+     *
      * @throws SOLAFault
-     * @throws UnhandledFault 
+     * @throws UnhandledFault
      */
     @WebMethod(operationName = "GetBaUnitAreas")
     public BaUnitAreaTO GetBaUnitAreas(
@@ -322,10 +325,10 @@ public class Administrative extends AbstractWebService {
             }
         });
 
-       return (BaUnitAreaTO) result[0];
+        return (BaUnitAreaTO) result[0];
     }
-    
-     /**
+
+    /**
      * See {@linkplain AdministrativeEJB#createBaUnitArea(java.lang.String,
      * org.sola.services.ejb.administrative.repository.entities.BaUnitArea)
      * AdministrativeEJB.createBaUnitArea}
@@ -359,8 +362,7 @@ public class Administrative extends AbstractWebService {
 
         return (BaUnitAreaTO) result[0];
     }
-     
-    
+
     /**
      * See {{@linkplain AdministrativeEJB#getBaUnitById(java.lang.String)
      * AdministrativeEJB.getBaUnitById}
@@ -385,12 +387,40 @@ public class Administrative extends AbstractWebService {
             @Override
             public void run() {
                 result[0] = GenericTranslator.toTO(
-                        administrativeEJB.getBaUnitWithCadObject(nameFirstpartTmp,nameLastpartTmp,colistTmp), BaUnitTO.class);
+                        administrativeEJB.getBaUnitWithCadObject(nameFirstpartTmp, nameLastpartTmp, colistTmp), BaUnitTO.class);
             }
         });
 
         return (BaUnitTO) result[0];
     }
 
-    
+    /**
+     * See {{@linkplain AdministrativeEJB#createStrataProperties(java.lang.String, org.sola.services.ejb.cadastre.repository.entities.UnitParcelGroup, java.util.List)
+     * AdministrativeEJB.createStrataProperties}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     * @throws OptimisticLockingFault
+     */
+    @WebMethod(operationName = "CreateStrataProperties")
+    public void CreateStrataProperties(
+            @WebParam(name = "serviceId") String serviceId,
+            @WebParam(name = "unitParcelGroupName") String unitParcelGroupName,
+            @WebParam(name = "baUnitIds") List<String> baUnitIds)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault, OptimisticLockingFault {
+
+        final String serviceIdTmp = serviceId;
+        final String unitParcelGroupNameTmp = unitParcelGroupName;
+        final List<String> baUnitIdsTmp = baUnitIds;
+
+        runUpdate(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                administrativeEJB.createStrataProperties(serviceIdTmp,
+                        cadastreEJB.getUnitParcelGroupByName(unitParcelGroupNameTmp), baUnitIdsTmp);
+            }
+        });
+    }
 }

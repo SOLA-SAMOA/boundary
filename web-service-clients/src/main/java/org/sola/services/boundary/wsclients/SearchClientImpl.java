@@ -314,7 +314,7 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
     }
 
     @Override
-    public List<PowerOfAttorneySearchResultTO> searchPowerOfAttorney(PowerOfAttorneySearchParamsTO searchParams) 
+    public List<PowerOfAttorneySearchResultTO> searchPowerOfAttorney(PowerOfAttorneySearchParamsTO searchParams)
             throws WebServiceClientException {
         List<PowerOfAttorneySearchResultTO> result = null;
         final String methodName = SearchClient.SEARCH_POWER_OF_ATTORNEY;
@@ -328,6 +328,38 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
             processException(methodName, e);
         } finally {
             afterWebMethod(methodName, result, searchParams);
+        }
+        return result;
+    }
+
+    @Override
+    public String getUnitDevelopmentNr(String serviceId, List<String> baUnitIds) 
+            throws WebServiceClientException {
+        String result = null;
+        final String methodName = SearchClient.GET_UNIT_DEVELOPMENT_NR;
+        try {
+            beforeWebMethod(methodName, serviceId, baUnitIds);
+            result = getPort().getUnitDevelopmentNr(serviceId, baUnitIds);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, serviceId, baUnitIds);
+        }
+        return result;
+    }
+
+    @Override
+    public List<StrataPropertyTO> getStrataProperties(String unitParcelGroupName, List<String> baUnitIds) 
+            throws WebServiceClientException {
+        List<StrataPropertyTO> result = null;
+        final String methodName = SearchClient.GET_STRATA_PROPERTIES;
+        try {
+            beforeWebMethod(methodName, unitParcelGroupName, baUnitIds);
+            result = getPort().getStrataProperties(unitParcelGroupName, baUnitIds);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, unitParcelGroupName, baUnitIds);
         }
         return result;
     }
