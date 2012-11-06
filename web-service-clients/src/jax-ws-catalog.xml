@@ -87,13 +87,6 @@
     <system systemId="http://localhost:8080/sola/webservices/referencedata-service?xsd=3" uri="wsdl/localhost_8080/sola/webservices/referencedata-service.xsd_3.xsd"/>
     <system systemId="http://localhost:8080/sola/webservices/referencedata-service?xsd=4" uri="wsdl/localhost_8080/sola/webservices/referencedata-service.xsd_4.xsd"/>
     <system systemId="http://localhost:8080/sola/webservices/referencedata-service?xsd=5" uri="wsdl/localhost_8080/sola/webservices/referencedata-service.xsd_5.xsd"/>
-    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?wsdl" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.wsdl"/>
-    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=1" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=2" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_2.xsd"/>
-    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=3" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_3.xsd"/>
-    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=4" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_4.xsd"/>
-    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=5" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_5.xsd"/>
-    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=6" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_6.xsd"/>
     <system systemId="http://localhost:8080/sola/webservices/spatial-service?wsdl" uri="wsdl/localhost_8080/sola/webservices/spatial-service.wsdl"/>
     <system systemId="http://localhost:8080/sola/webservices/spatial-service?xsd=1" uri="wsdl/localhost_8080/sola/webservices/spatial-service.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/sola/webservices/spatial-service?xsd=2" uri="wsdl/localhost_8080/sola/webservices/spatial-service.xsd_2.xsd"/>
@@ -104,4 +97,11 @@
     <system systemId="http://localhost:8080/sola/webservices/filestreaming-service?xsd=2" uri="wsdl/localhost_8080/sola/webservices/filestreaming-service.xsd_2.xsd"/>
     <system systemId="http://localhost:8080/sola/webservices/filestreaming-service?xsd=3" uri="wsdl/localhost_8080/sola/webservices/filestreaming-service.xsd_3.xsd"/>
     <system systemId="http://www.w3.org/2005/05/xmlmime" uri="wsdl/www.w3.org/2005/05/xmlmime.xsd"/>
+    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?wsdl" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.wsdl"/>
+    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=1" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=2" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_2.xsd"/>
+    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=3" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_3.xsd"/>
+    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=4" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_4.xsd"/>
+    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=5" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_5.xsd"/>
+    <system systemId="http://localhost:8080/sola/webservices/casemanagement-service?xsd=6" uri="wsdl/localhost_8080/sola/webservices/casemanagement-service.xsd_6.xsd"/>
 </catalog>

@@ -847,6 +847,8 @@
                     </wsp:Policy>
                 </sp:SignedSupportingTokens>
                 <sc:KeyStore wspp:visibility="private" location="keystore.jks" type="JKS" storepass="changeit" alias="xws-security-server"/>
+                <!-- Allow clock skew up to 70 minutes due to issues with Samoan Time Zones -->
+                <sc:ValidatorConfiguration wspp:visibility="private" revocationEnabled="false" maxClockSkew="4200000"/>
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
