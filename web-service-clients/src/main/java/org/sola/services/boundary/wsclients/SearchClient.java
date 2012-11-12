@@ -26,6 +26,7 @@
 package org.sola.services.boundary.wsclients;
 
 import java.util.List;
+import org.sola.common.RolesConstants;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
 import org.sola.webservices.search.QueryForSelect;
 import org.sola.webservices.search.ResultForSelectionInfo;
@@ -109,11 +110,18 @@ public interface SearchClient extends AbstractWSClient {
      * Search.searchSpatialObjects - Identifier for the searchSpatialObjects method
      */
     public static final String SEARCH_SPATIAL_OBJECTS = SERVICE_NAME + "searchSpatialObjects";
-
     /**
      * Search.getMapDefinition - Identifier for the getMapDefinition method
      */
     public static final String GET_MAP_DEFINITION = SERVICE_NAME + "getMapDefinition";
+    /**
+     * Search.getUnitDevelopmentNr - Identifier for the getUnitDevelopmentNr method
+     */
+    public static final String GET_UNIT_DEVELOPMENT_NR = SERVICE_NAME + "getUnitDevelopmentNr";
+    /**
+     * Search.getStrataProperties - Identifier for the getStrataProperties method
+     */
+    public static final String GET_STRATA_PROPERTIES = SERVICE_NAME + "getStrataProperties";
 
     /**
      * Returns applications that have a lodged or approved status and are assigned to the currently
@@ -280,14 +288,38 @@ public interface SearchClient extends AbstractWSClient {
      * @throws WebServiceClientException
      */
     MapDefinitionTO getMapDefinition() throws WebServiceClientException;
-    
+
     /**
-     * Executes a search across all Power of attorney using the search criteria provided. 
-     * Partial matches are supported for the document number and the document reference number criteria.
+     * Executes a search across all Power of attorney using the search criteria provided. Partial
+     * matches are supported for the document number and the document reference number criteria.
      *
      * @param searchParams The criteria to use for the search.
      * @return A maximum of 101 records that match the search criteria.
      * @throws WebServiceClientException
      */
     List<PowerOfAttorneySearchResultTO> searchPowerOfAttorney(PowerOfAttorneySearchParamsTO searchParams) throws WebServiceClientException;
+
+    /**
+     * Samoa Customization - Retrieves a number for the Unit Development linked to the specified
+     * service or to one or more of the specified BA Units.
+     *
+     * @param serviceId
+     * @param baUnitIds
+     * @return
+     * @throws WebServiceClientException
+     */
+    String getUnitDevelopmentNr(String serviceId, List<String> baUnitIds) throws WebServiceClientException;
+
+    /**
+     * Samoa Customization - retrieves a summary of the properties that are part of the specified
+     * unit parcel group. Also retrieves a summary of the properties noted in the baUnitIds list.
+     * Typically this list will represent the underlying properties of the unit development and is
+     * included as a parameter in case the underlying property is not linked to a cadastre_object.
+     *
+     * @param unitParcelGroupName
+     * @param baUnitIds
+     * @return
+     * @throws WebServiceClientException
+     */
+    List<StrataPropertyTO> getStrataProperties(String unitParcelGroupName, List<String> baUnitIds) throws WebServiceClientException;
 }

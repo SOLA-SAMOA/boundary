@@ -48,7 +48,8 @@ import org.sola.services.ejb.search.spatial.QueryForSelect;
 import org.sola.services.ejb.search.spatial.ResultForSelectionInfo;
 
 /**
- * Web Service Boundary class to expose {@linkplain org.sola.services.ejb.search.businesslogic.SearchEJB} methods.
+ * Web Service Boundary class to expose {@linkplain org.sola.services.ejb.search.businesslogic.SearchEJB}
+ * methods.
  */
 @WebService(serviceName = "search-service", targetNamespace = ServiceConstants.SEARCH_WS_NAMESPACE)
 public class Search extends AbstractWebService {
@@ -271,7 +272,7 @@ public class Search extends AbstractWebService {
 
         return (List<SourceSearchResultTO>) result[0];
     }
-    
+
     /**
      * See {@linkplain  org.sola.services.ejb.search.businesslogic.SearchEJB#searchPowerOfAttorney(org.sola.services.ejb.search.repository.entities.PowerOfAttorneySearchParams)
      * SearchEJB.searchPowerOfAttorney}
@@ -531,7 +532,7 @@ public class Search extends AbstractWebService {
             @Override
             public void run() {
                 HashMap<String, String> mapSettings = searchEJB.getMapSettingList();
-                List<ConfigMapLayer> configMapLayerList = 
+                List<ConfigMapLayer> configMapLayerList =
                         searchEJB.getConfigMapLayerList(languageCodeTmp);
                 MapDefinitionTO mapDefinition = new MapDefinitionTO();
                 mapDefinition.setSrid(Integer.parseInt(mapSettings.get("map-srid")));
@@ -555,5 +556,61 @@ public class Search extends AbstractWebService {
 
         return (MapDefinitionTO) result[0];
     }
-    
+
+    /**
+     * See {@linkplain  org.sola.services.ejb.search.businesslogic.SearchEJB#getUnitDevelopmentNr(java.lang.String, java.util.List)
+     * SearchEJB.getUnitDevelopmentNr}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "GetUnitDevelopmentNr")
+    public String getUnitDevelopmentNr(@WebParam(name = "serviceId") String serviceId,
+            @WebParam(name = "baUnitIds") List<String> baUnitIds)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String serviceIdTmp = serviceId;
+        final List<String> baUnitIdsTmp = baUnitIds;
+        final String[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = searchEJB.getUnitDevelopmentNr(serviceIdTmp, baUnitIdsTmp);
+            }
+        });
+        return result[0];
+    }
+
+    /**
+     * See {@linkplain  org.sola.services.ejb.search.businesslogic.SearchEJB#getStrataProperties(java.lang.String, java.util.List) 
+     * SearchEJB.getStrataProperties}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "GetStrataProperties")
+    public List<StrataPropertyTO> getStrataProperties(
+            @WebParam(name = "unitParcelGroupName") String unitParcelGroupName,
+            @WebParam(name = "baUnitIds") List<String> baUnitIds)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String unitParcelGroupNameTmp = unitParcelGroupName;
+        final List<String> baUnitIdsTmp = baUnitIds;
+        final Object[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = GenericTranslator.toTOList(
+                        searchEJB.getStrataProperties(unitParcelGroupNameTmp, baUnitIdsTmp),
+                        StrataPropertyTO.class);
+            }
+        });
+        return (List<StrataPropertyTO>) result[0];
+    }
 }

@@ -161,7 +161,7 @@ public class MockAdministrativePort implements Administrative {
             return null;
         }
     }
-    
+
     /**
      * Response Key = AdministrativeClient.CREATE_BA_UNIT_AREA
      *
@@ -180,8 +180,6 @@ public class MockAdministrativePort implements Administrative {
         }
     }
 
-    
-    
     /**
      * Response Key = AdministrativeClient.SAVE_BA_UNIT
      *
@@ -287,8 +285,8 @@ public class MockAdministrativePort implements Administrative {
             return null;
         }
     }
-    
-       /**
+
+    /**
      * Response Key = AdministrativeClient.GET_BA_UNIT_AREAS
      *
      * @return default = new BaUnitAreaTO()
@@ -305,7 +303,7 @@ public class MockAdministrativePort implements Administrative {
         }
     }
 
-       /**
+    /**
      * Response Key = AdministrativeClient.GET_BA_UNIT_WITH_CAD_OBJECT
      *
      * @return default = new BaUnitTO()
@@ -315,10 +313,26 @@ public class MockAdministrativePort implements Administrative {
         BaUnitTO defaultResponse = new BaUnitTO();
         try {
             return getManager().getResponse(AdministrativeClient.GET_BA_UNIT_WITH_CAD_OBJECT,
-                    BaUnitTO.class, defaultResponse, nameFirstPart,nameLastPart,colist);
+                    BaUnitTO.class, defaultResponse, nameFirstPart, nameLastPart, colist);
         } catch (Exception ex) {
             processExceptionBasic(ex);
             return null;
+        }
+    }
+
+    /**
+     * Response Key = AdministrativeClient.CREATE_STRATA_PROPERTIES
+     *
+     * @return void
+     */
+    @Override
+    public void createStrataProperties(String serviceId, String unitParcelGroupName, List<String> baUnitIds)
+            throws OptimisticLockingFault, SOLAAccessFault, SOLAFault, UnhandledFault {
+        try {
+            getManager().getResponse(AdministrativeClient.CREATE_STRATA_PROPERTIES,
+                    Void.class, null, serviceId, unitParcelGroupName, baUnitIds);
+        } catch (Exception ex) {
+            processExceptionUpdate(ex);
         }
     }
 }

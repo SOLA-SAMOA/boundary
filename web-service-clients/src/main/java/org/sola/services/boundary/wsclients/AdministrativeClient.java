@@ -51,12 +51,10 @@ public interface AdministrativeClient extends AbstractWSClient {
      * Administrative.createBaUnit - Identifier for the createBaUnit method
      */
     public static final String CREATE_BA_UNIT = SERVICE_NAME + "createBaUnit";
-   
     /**
      * Administrative.createBaUnitArea - Identifier for the createBaUnitArea method
      */
     public static final String CREATE_BA_UNIT_AREA = SERVICE_NAME + "createBaUnitArea";
-   
     /**
      * Administrative.saveBaUnit - Identifier for the saveBaUnit method
      */
@@ -81,21 +79,21 @@ public interface AdministrativeClient extends AbstractWSClient {
      * Administrative.terminateBaUnit - Identifier for the terminateBaUnit method
      */
     public static final String TERMINATE_BA_UNIT = SERVICE_NAME + "terminateBaUnit";
-    
-     /**
+    /**
      * Administrative.getBaUnitAreas - Identifier for the getBaUnitAreas method
      */
     public static final String GET_BA_UNIT_AREAS = SERVICE_NAME + "getBaUnitAreas";
-    
-     /**
+    /**
      * Administrative.getBaUnitWithCadObject - Identifier for the getBaUnitWithCadObject method
      */
     public static final String GET_BA_UNIT_WITH_CAD_OBJECT = SERVICE_NAME + "getBaUnitWithCadObject";
-   
-   
-   
-     /**
-     * Creates a new BA Unit Area for a BaUnitId 
+    /*
+     * Administrative.createStrataProperties - Identifier for the createStrataProperties method
+     */
+    public static final String CREATE_STRATA_PROPERTIES = SERVICE_NAME + "createStrataProperties";
+
+    /**
+     * Creates a new BA Unit Area for a BaUnitId
      *
      * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE} role.</p>
      *
@@ -107,8 +105,6 @@ public interface AdministrativeClient extends AbstractWSClient {
      */
     BaUnitAreaTO createBaUnitArea(String baUnitId, BaUnitAreaTO baUnitAreaTO) throws WebServiceClientException;
 
-    
-    
     /**
      * Creates a new BA Unit with a default status of pending and a default type of
      * basicPropertyUnit. Will also create a new Transaction record for the BA Unit if the Service
@@ -196,8 +192,8 @@ public interface AdministrativeClient extends AbstractWSClient {
      * @throws WebServiceClientException
      */
     BaUnitTO terminateBaUnit(String baUnitId, String serviceId) throws WebServiceClientException;
-    
-     /**
+
+    /**
      * Retrieves the list of BA Unit Areas associated with the specified BA Unit Id.
      *
      * @param baUnitId The Service identifier
@@ -215,7 +211,20 @@ public interface AdministrativeClient extends AbstractWSClient {
      * @return The BA Unit details or null if the identifier is invalid.
      * @throws WebServiceClientException
      */
-    BaUnitTO getBaUnitWithCadObject(String nameFirstPart, String nameLastPart, String colist ) throws WebServiceClientException;
+    BaUnitTO getBaUnitWithCadObject(String nameFirstPart, String nameLastPart, String colist) throws WebServiceClientException;
 
-    
+    /**
+     * Creates the Strata Properties required for a Unit Development. This method can be used to
+     * create the initial set of properties based on a UnitParcelGroup as well as to create any
+     * additional properties when the Unit Parcel Group is changed.
+     *
+     * @param serviceId The identifier for the Create Unit Title Service
+     * @param group The Unit Parcel Group
+     * @param baUnitIds The list of BA Units representing the underlying properties for the Unit
+     * Development (Typically the list of BA Units linked to the application as Application
+     * Properties). This list of BA Units is checked to ensure only valid properties are linked as
+     * the underlying properties for the unit development.
+     * @throws WebServiceClientException
+     */
+    void createStrataProperties(String serviceId, String unitParcelGroupName, List<String> baUnitIds) throws WebServiceClientException;
 }

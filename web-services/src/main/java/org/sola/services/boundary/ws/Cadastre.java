@@ -495,8 +495,36 @@ public class Cadastre extends AbstractWebService {
 
         return (UnitParcelGroupTO) result[0];
     }
-    
-     /**
+
+    /**
+     * See {@linkplain org.sola.services.ejb.cadastre.businesslogic.CadastreEJB#getUnitParcelGroupByName(String)
+     * CadastreEJB.getUnitParcelGroupByName}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "GetUnitParcelGroupByName")
+    public UnitParcelGroupTO GetUnitParcelGroupByName(
+            @WebParam(name = "groupName") String groupName)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String groupNameTmp = groupName;
+        final Object[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = GenericTranslator.toTO(
+                        cadastreEJB.getUnitParcelGroupByName(groupNameTmp), UnitParcelGroupTO.class);
+            }
+        });
+
+        return (UnitParcelGroupTO) result[0];
+    }
+
+    /**
      * See {@linkplain org.sola.services.ejb.transaction.businesslogic.TransactionEJB#getTransactionByServiceId(java.lang.String,
      * boolean, java.lang.Class)
      * TransactionEJB.getTransactionByServiceId}
@@ -518,15 +546,15 @@ public class Cadastre extends AbstractWebService {
             @Override
             public void run() {
                 result[0] = GenericTranslator.toTO(
-                        transactionEJB.getTransactionByServiceId(serviceIdTmp, true, 
+                        transactionEJB.getTransactionByServiceId(serviceIdTmp, true,
                         TransactionUnitParcels.class), TransactionUnitParcelsTO.class);
             }
         });
 
         return (TransactionUnitParcelsTO) result[0];
     }
-    
-        /**
+
+    /**
      * See {@linkplain org.sola.services.ejb.transaction.businesslogic.TransactionEJB#saveTransaction(org.sola.services.ejb.transaction.repository.entities.TransactionBasic,
      * java.lang.String, java.lang.String) TransactionEJB.saveTransaction}
      *
@@ -565,5 +593,4 @@ public class Cadastre extends AbstractWebService {
 
         return (List<ValidationResult>) result[0];
     }
-
 }

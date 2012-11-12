@@ -276,7 +276,7 @@ public class CadastreClientImpl extends AbstractWSClientImpl implements Cadastre
     }
 
     @Override
-    public TransactionUnitParcelsTO getTransactionUnitParcels(String serviceId) 
+    public TransactionUnitParcelsTO getTransactionUnitParcels(String serviceId)
             throws WebServiceClientException {
         TransactionUnitParcelsTO result = null;
         final String methodName = CadastreClient.GET_TRANSACTION_UNIT_PARCELS;
@@ -290,9 +290,9 @@ public class CadastreClientImpl extends AbstractWSClientImpl implements Cadastre
         }
         return result;
     }
-    
+
     @Override
-    public UnitParcelGroupTO getUnitParcelGroupByParcelId(String parcelId) 
+    public UnitParcelGroupTO getUnitParcelGroupByParcelId(String parcelId)
             throws WebServiceClientException {
         UnitParcelGroupTO result = null;
         final String methodName = CadastreClient.GET_UNIT_PARCELS_BY_PARCEL_ID;
@@ -308,7 +308,23 @@ public class CadastreClientImpl extends AbstractWSClientImpl implements Cadastre
     }
 
     @Override
-    public List<ValidationResult> saveUnitParcels(TransactionUnitParcelsTO transactionUnitParcelsTO) 
+    public UnitParcelGroupTO getUnitParcelGroupByName(String groupName)
+            throws WebServiceClientException {
+        UnitParcelGroupTO result = null;
+        final String methodName = CadastreClient.GET_UNIT_PARCELS_BY_NAME;
+        try {
+            beforeWebMethod(methodName, groupName);
+            result = getPort().getUnitParcelGroupByName(groupName);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, groupName);
+        }
+        return result;
+    }
+
+    @Override
+    public List<ValidationResult> saveUnitParcels(TransactionUnitParcelsTO transactionUnitParcelsTO)
             throws WebServiceClientException {
         List<ValidationResult> result = null;
         final String methodName = CadastreClient.SAVE_UNIT_PARCELS;

@@ -408,6 +408,24 @@ public class MockCadastrePort implements Cadastre {
     }
 
     /**
+     * Response Key = CadastreClient.GET_UNIT_PARCELS_BY_NAME
+     *
+     * @return default = new UnitParcelGroupTO()
+     */
+    @Override
+    public UnitParcelGroupTO getUnitParcelGroupByName(String groupName)
+            throws SOLAAccessFault, SOLAFault, UnhandledFault {
+        UnitParcelGroupTO defaultResponse = new UnitParcelGroupTO();
+        try {
+            return getManager().getResponse(CadastreClient.GET_UNIT_PARCELS_BY_NAME,
+                    UnitParcelGroupTO.class, defaultResponse, groupName);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return null;
+        }
+    }
+
+    /**
      * Response Key = CadastreClient.SAVE_UNIT_PARCELS
      *
      * @return default = new ArrayList<ValidationResult>()

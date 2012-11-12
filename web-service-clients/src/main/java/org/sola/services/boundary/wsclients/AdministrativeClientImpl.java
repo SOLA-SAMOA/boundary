@@ -85,8 +85,7 @@ public class AdministrativeClientImpl extends AbstractWSClientImpl
         }
         return result;
     }
-    
-    
+
     @Override
     public BaUnitAreaTO createBaUnitArea(
             String baUnitId, BaUnitAreaTO baUnitAreaTO) throws WebServiceClientException {
@@ -103,8 +102,6 @@ public class AdministrativeClientImpl extends AbstractWSClientImpl
         return result;
     }
 
-    
-    
     @Override
     public BaUnitTO saveBaUnit(
             String serviceId, BaUnitTO baUnitTO) throws WebServiceClientException {
@@ -195,8 +192,8 @@ public class AdministrativeClientImpl extends AbstractWSClientImpl
         }
         return result;
     }
-    
-     @Override
+
+    @Override
     public BaUnitAreaTO getBaUnitAreas(String baUnitId) throws WebServiceClientException {
         BaUnitAreaTO result = null;
         final String methodName = AdministrativeClient.GET_BA_UNIT_AREAS;
@@ -210,21 +207,33 @@ public class AdministrativeClientImpl extends AbstractWSClientImpl
         }
         return result;
     }
-     
-     
+
     @Override
     public BaUnitTO getBaUnitWithCadObject(String nameFirstPart, String nameLastPart, String colist) throws WebServiceClientException {
         BaUnitTO result = null;
         final String methodName = AdministrativeClient.GET_BA_UNIT_WITH_CAD_OBJECT;
         try {
-            beforeWebMethod(methodName, nameFirstPart,nameLastPart,colist);
-            result = getPort().getBaUnitWithCadObject(nameFirstPart,nameLastPart,colist);
+            beforeWebMethod(methodName, nameFirstPart, nameLastPart, colist);
+            result = getPort().getBaUnitWithCadObject(nameFirstPart, nameLastPart, colist);
         } catch (Exception e) {
             processException(methodName, e);
         } finally {
-            afterWebMethod(methodName, result, nameFirstPart,nameLastPart, colist);
+            afterWebMethod(methodName, result, nameFirstPart, nameLastPart, colist);
         }
         return result;
-    } 
-     
+    }
+
+    @Override
+    public void createStrataProperties(String serviceId, String unitParcelGroupName,
+            List<String> baUnitIds) throws WebServiceClientException {
+        final String methodName = AdministrativeClient.CREATE_STRATA_PROPERTIES;
+        try {
+            beforeWebMethod(methodName, serviceId, unitParcelGroupName, baUnitIds);
+            getPort().createStrataProperties(serviceId, unitParcelGroupName, baUnitIds);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, null, serviceId, unitParcelGroupName, baUnitIds);
+        }
+    }
 }
