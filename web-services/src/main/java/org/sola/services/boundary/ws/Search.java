@@ -613,4 +613,24 @@ public class Search extends AbstractWebService {
         });
         return (List<StrataPropertyTO>) result[0];
     }
+    
+    @WebMethod(operationName = "GetUnregisteredDealings")
+    public List<UnregisteredDealingTO> getUnregisteredDealings(
+           @WebParam(name = "baUnitId") String baUnitId)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String baUnitIdTmp = baUnitId;
+        final Object[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = GenericTranslator.toTOList(
+                        searchEJB.getUnregisteredDealings(baUnitIdTmp),
+                        UnregisteredDealingTO.class);
+            }
+        });
+        return (List<UnregisteredDealingTO>) result[0];
+    }
 }

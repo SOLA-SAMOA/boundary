@@ -363,4 +363,20 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
         }
         return result;
     }
+    
+        @Override
+    public List<UnregisteredDealingTO> getUnregisteredDealings(String baUnitId) 
+            throws WebServiceClientException {
+        List<UnregisteredDealingTO> result = null;
+        final String methodName = SearchClient.GET_UNREGISTERED_DEALINGS;
+        try {
+            beforeWebMethod(methodName, baUnitId);
+            result = getPort().getUnregisteredDealings(baUnitId);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, baUnitId);
+        }
+        return result;
+    }
 }

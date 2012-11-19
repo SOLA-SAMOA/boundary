@@ -122,6 +122,10 @@ public interface SearchClient extends AbstractWSClient {
      * Search.getStrataProperties - Identifier for the getStrataProperties method
      */
     public static final String GET_STRATA_PROPERTIES = SERVICE_NAME + "getStrataProperties";
+    /**
+     * Search.getUnregisteredDealings - Identifier for the getUnregisteredDealings method
+     */
+    public static final String GET_UNREGISTERED_DEALINGS = SERVICE_NAME + "getUnregisteredDealings";
 
     /**
      * Returns applications that have a lodged or approved status and are assigned to the currently
@@ -322,4 +326,14 @@ public interface SearchClient extends AbstractWSClient {
      * @throws WebServiceClientException
      */
     List<StrataPropertyTO> getStrataProperties(String unitParcelGroupName, List<String> baUnitIds) throws WebServiceClientException;
+
+    /**
+     * Samoa Customization - the list of unregistered dealings (i.e. applications that are lodged or
+     * approved linked to the property. Used on the Computer Folio Certificate report
+     *
+     * @param baUnitId
+     * @return
+     * @throws WebServiceClientException
+     */
+    List<UnregisteredDealingTO> getUnregisteredDealings(String baUnitId) throws WebServiceClientException;
 }

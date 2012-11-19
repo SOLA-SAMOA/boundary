@@ -435,4 +435,22 @@ public class MockSearchPort implements Search {
             return null;
         }
     }
+    
+     /**
+     * Response Key = SearchClient.GET_UNREGISTERED_DEALINGS
+     *
+     * @return default = new ArrayList<UnregisteredDealingTO>()
+     */
+    @Override
+    public List<UnregisteredDealingTO> getUnregisteredDealings(String baUnitId)
+            throws SOLAAccessFault, SOLAFault, UnhandledFault {
+        List<UnregisteredDealingTO> defaultResponse = new ArrayList<UnregisteredDealingTO>();
+        try {
+            return getManager().getResponse(SearchClient.GET_UNREGISTERED_DEALINGS,
+                    List.class, defaultResponse, baUnitId);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return null;
+        }
+    }
 }
