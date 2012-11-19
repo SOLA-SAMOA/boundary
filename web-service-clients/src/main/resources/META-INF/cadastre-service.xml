@@ -99,6 +99,8 @@
         <wsp:ExactlyOne>
             <wsp:All>
                 <sc:TrustStore wspp:visibility="private" type="JKS" storepass="changeit" peeralias="xws-security-server" location="cacerts.jks"/>
+                <!-- Allow clock skew up to 30 hours due to issues with Samoan Time Zones -->
+                <sc:ValidatorConfiguration wspp:visibility="private" revocationEnabled="false" maxClockSkew="108000000" timestampFreshnessLimit="108000000"/>
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
