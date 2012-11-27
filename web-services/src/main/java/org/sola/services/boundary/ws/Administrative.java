@@ -262,7 +262,9 @@ public class Administrative extends AbstractWebService {
                 if (serviceId != null) {
                     TransactionBasic transaction = transactionEJB.getTransactionByServiceId(serviceId, false, TransactionBasic.class);
                     if (transaction != null) {
-                        List<BaUnit> baUnits = administrativeEJB.getBaUnitsByTransactionId(transaction.getId());
+                        // SOLA Samoa customization - only return the BA Units created by this transaction
+                        // not every ba unit affected by the transaction
+                        List<BaUnit> baUnits = administrativeEJB.getBaUnitsCreatedByTransactionId(transaction.getId());
                         result[0] = GenericTranslator.toTOList(baUnits, BaUnitTO.class);
                     }
                 }
