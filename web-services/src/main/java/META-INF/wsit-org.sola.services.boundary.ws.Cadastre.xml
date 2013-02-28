@@ -306,9 +306,7 @@
                         </sp:UsernameToken>
                     </wsp:Policy>
                 </sp:SignedSupportingTokens>
-                <sc:KeyStore wspp:visibility="private" location="keystore.jks" type="JKS" storepass="changeit" alias="xws-security-server"/>
-                <!-- Allow clock skew up to 30 hours due to issues with Samoan Time Zones -->
-                <sc:ValidatorConfiguration wspp:visibility="private" revocationEnabled="false" maxClockSkew="108000000" timestampFreshnessLimit="108000000"/>
+                <sc:KeyStore wspp:visibility="private" location="${wsit.keystore.location}" type="JKS" storepass="${wsit.keystore.storepass}" alias="${wsit.keystore.peeralias}"/>
             </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
