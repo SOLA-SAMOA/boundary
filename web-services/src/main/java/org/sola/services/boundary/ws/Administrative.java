@@ -1,26 +1,30 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO). All rights
- * reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice,this list of conditions
- * and the following disclaimer. 2. Redistributions in binary form must reproduce the above
- * copyright notice,this list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution. 3. Neither the name of FAO nor the names of its
- * contributors may be used to endorse or promote products derived from this software without
- * specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.services.boundary.ws;
@@ -35,6 +39,7 @@ import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import org.sola.services.boundary.transferobjects.administrative.BaUnitAreaTO;
 import org.sola.services.boundary.transferobjects.administrative.BaUnitTO;
+import org.sola.services.boundary.transferobjects.administrative.CertificatePrintTO;
 import org.sola.services.common.ServiceConstants;
 import org.sola.services.common.contracts.GenericTranslator;
 import org.sola.services.common.faults.*;
@@ -43,6 +48,7 @@ import org.sola.services.ejb.administrative.businesslogic.AdministrativeEJB;
 import org.sola.services.ejb.administrative.businesslogic.AdministrativeEJBLocal;
 import org.sola.services.ejb.administrative.repository.entities.BaUnit;
 import org.sola.services.ejb.administrative.repository.entities.BaUnitArea;
+import org.sola.services.ejb.administrative.repository.entities.CertificatePrint;
 import org.sola.services.ejb.cadastre.businesslogic.CadastreEJBLocal;
 import org.sola.services.ejb.transaction.businesslogic.TransactionEJBLocal;
 import org.sola.services.ejb.transaction.repository.entities.TransactionBasic;
@@ -93,7 +99,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runUpdate(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 BaUnit newBaUnit = administrativeEJB.createBaUnit(
@@ -128,7 +133,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runUpdate(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 if (baUnitTOTmp != null) {
@@ -164,7 +168,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runUpdateValidation(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 String baUnitId = (String) params[0];
@@ -195,7 +198,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runUpdateValidation(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 String baUnitId = (String) params[0];
@@ -221,7 +223,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runOpenQuery(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 result[0] = GenericTranslator.toTO(
@@ -236,8 +237,8 @@ public class Administrative extends AbstractWebService {
      * Retrieves the list of BA Unit associated with the specified Service.
      *
      * @param serviceId The Service identifier
-     * @return The list of BA Unit associated with the service or an empty list if the service does
-     * not have any BA Units associated with it.
+     * @return The list of BA Unit associated with the service or an empty list
+     * if the service does not have any BA Units associated with it.
      * @throws SOLAFault
      * @throws UnhandledFault
      * @throws SOLAAccessFault
@@ -255,7 +256,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {new ArrayList<BaUnitTO>()};
 
         runOpenQuery(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 String serviceId = (String) params[0];
@@ -291,7 +291,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runOpenQuery(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 result[0] = GenericTranslator.toTO(
@@ -319,7 +318,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runOpenQuery(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 result[0] = GenericTranslator.toTO(
@@ -351,7 +349,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runUpdate(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 BaUnitArea newBaUnitArea = administrativeEJB.createBaUnitArea(
@@ -385,7 +382,6 @@ public class Administrative extends AbstractWebService {
         final Object[] result = {null};
 
         runOpenQuery(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 result[0] = GenericTranslator.toTO(
@@ -417,12 +413,40 @@ public class Administrative extends AbstractWebService {
         final List<String> baUnitIdsTmp = baUnitIds;
 
         runUpdate(wsContext, new Runnable() {
-
             @Override
             public void run() {
                 administrativeEJB.createStrataProperties(serviceIdTmp,
                         cadastreEJB.getUnitParcelGroupByName(unitParcelGroupNameTmp), baUnitIdsTmp);
             }
         });
+    }
+
+    /**
+     * See {@linkplain AdministrativeEJB#saveCertificatePrint(java.lang.String,
+     * org.sola.services.ejb.administrative.repository.entities.BaUnitArea)
+     * AdministrativeEJB.createBaUnitArea}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     * @throws OptimisticLockingFault
+     */
+    @WebMethod(operationName = "SaveCertificatePrint")
+    public CertificatePrintTO saveCertificatePrint(
+            @WebParam(name = "print") CertificatePrintTO print)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault, OptimisticLockingFault {
+
+        final CertificatePrintTO printTmp = print;
+        final Object[] result = {null};
+
+        runUpdate(wsContext, new Runnable() {
+            @Override
+            public void run() {
+                CertificatePrint newPrint = administrativeEJB.saveCertificatePrint(
+                        GenericTranslator.fromTO(printTmp, CertificatePrint.class, null));
+                result[0] = GenericTranslator.toTO(newPrint, CertificatePrintTO.class);
+            }
+        });
+        return (CertificatePrintTO) result[0];
     }
 }

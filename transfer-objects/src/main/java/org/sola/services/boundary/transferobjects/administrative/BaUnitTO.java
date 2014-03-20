@@ -55,6 +55,7 @@ public class BaUnitTO extends AbstractIdTO {
     private String district;
     private String priorTitle;
     private Date folioRegDate;
+    private List<CertificatePrintTO> certificatePrintList;
 
     public BigDecimal getCalculatedAreaSize() {
         return calculatedAreaSize;
@@ -223,6 +224,14 @@ public class BaUnitTO extends AbstractIdTO {
 
     public void setPendingActionCode(String pendingActionCode) {
         this.pendingActionCode = pendingActionCode;
+    }
+
+    public List<CertificatePrintTO> getCertificatePrintList() {
+        return certificatePrintList;
+    }
+
+    public void setCertificatePrintList(List<CertificatePrintTO> certificatePrintList) {
+        this.certificatePrintList = certificatePrintList;
     }
     
 }

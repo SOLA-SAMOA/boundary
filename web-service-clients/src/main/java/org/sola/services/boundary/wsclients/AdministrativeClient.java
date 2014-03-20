@@ -1,38 +1,45 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO). All rights
- * reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice,this list of conditions
- * and the following disclaimer. 2. Redistributions in binary form must reproduce the above
- * copyright notice,this list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution. 3. Neither the name of FAO nor the names of its
- * contributors may be used to endorse or promote products derived from this software without
- * specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.services.boundary.wsclients;
 
 import java.util.List;
+import org.sola.common.RolesConstants;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
 import org.sola.webservices.transferobjects.administrative.BaUnitAreaTO;
 import org.sola.webservices.transferobjects.administrative.BaUnitTO;
+import org.sola.webservices.transferobjects.administrative.CertificatePrintTO;
 
 /**
- * Interface for the Administrative Service. Implemented by {@linkplain AdministrativeClientImpl}.
- * To obtain a reference to the Administrative Service, use {@linkplain WSManager#getAdministrative()}
+ * Interface for the Administrative Service. Implemented by
+ * {@linkplain AdministrativeClientImpl}. To obtain a reference to the
+ * Administrative Service, use {@linkplain WSManager#getAdministrative()}
  *
  * @see AdministrativeClientImpl
  * @see WSManager#getAdministrative()
@@ -44,7 +51,8 @@ public interface AdministrativeClient extends AbstractWSClient {
      */
     public static final String SERVICE_NAME = "Administrative.";
     /**
-     * Administrative.checkConnection - Identifier for the checkConnection method
+     * Administrative.checkConnection - Identifier for the checkConnection
+     * method
      */
     public static final String CHECK_CONNECTION = SERVICE_NAME + "checkConnection";
     /**
@@ -52,7 +60,8 @@ public interface AdministrativeClient extends AbstractWSClient {
      */
     public static final String CREATE_BA_UNIT = SERVICE_NAME + "createBaUnit";
     /**
-     * Administrative.createBaUnitArea - Identifier for the createBaUnitArea method
+     * Administrative.createBaUnitArea - Identifier for the createBaUnitArea
+     * method
      */
     public static final String CREATE_BA_UNIT_AREA = SERVICE_NAME + "createBaUnitArea";
     /**
@@ -64,19 +73,23 @@ public interface AdministrativeClient extends AbstractWSClient {
      */
     public static final String GET_BA_UNIT_BY_ID = SERVICE_NAME + "getBaUnitById";
     /**
-     * Administrative.getBaUnitByCode - Identifier for the getBaUnitByCode method
+     * Administrative.getBaUnitByCode - Identifier for the getBaUnitByCode
+     * method
      */
     public static final String GET_BA_UNIT_BY_CODE = SERVICE_NAME + "getBaUnitByCode";
     /**
-     * Administrative.getBaUnitsByServiceId - Identifier for the getBaUnitsByServiceId method
+     * Administrative.getBaUnitsByServiceId - Identifier for the
+     * getBaUnitsByServiceId method
      */
     public static final String GET_BA_UNITS_BY_SERVICE_ID = SERVICE_NAME + "getBaUnitsByServiceId";
     /**
-     * Administrative.cancelBaUnitTermination - Identifier for the cancelBaUnitTermination method
+     * Administrative.cancelBaUnitTermination - Identifier for the
+     * cancelBaUnitTermination method
      */
     public static final String CANCEL_BA_UNIT_TERMINIATION = SERVICE_NAME + "cancelBaUnitTermination";
     /**
-     * Administrative.terminateBaUnit - Identifier for the terminateBaUnit method
+     * Administrative.terminateBaUnit - Identifier for the terminateBaUnit
+     * method
      */
     public static final String TERMINATE_BA_UNIT = SERVICE_NAME + "terminateBaUnit";
     /**
@@ -84,35 +97,42 @@ public interface AdministrativeClient extends AbstractWSClient {
      */
     public static final String GET_BA_UNIT_AREAS = SERVICE_NAME + "getBaUnitAreas";
     /**
-     * Administrative.getBaUnitWithCadObject - Identifier for the getBaUnitWithCadObject method
+     * Administrative.getBaUnitWithCadObject - Identifier for the
+     * getBaUnitWithCadObject method
      */
     public static final String GET_BA_UNIT_WITH_CAD_OBJECT = SERVICE_NAME + "getBaUnitWithCadObject";
     /*
      * Administrative.createStrataProperties - Identifier for the createStrataProperties method
      */
     public static final String CREATE_STRATA_PROPERTIES = SERVICE_NAME + "createStrataProperties";
+    public static final String SAVE_CERTIFICATE_PRINT = SERVICE_NAME + "saveCertificatePrint";
 
     /**
      * Creates a new BA Unit Area for a BaUnitId
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE} role.</p>
+     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * role.</p>
      *
-     * @param baUnitId The identifier of the area the BA Unit is being created as part of
+     * @param baUnitId The identifier of the area the BA Unit is being created
+     * as part of
      * @param baUnitAreaTO The details of the BA Unit Area to create
      * @return The new BA Unit Area
-     * org.sola.webservices.transferobjects.administrative.BaUnitAreaTO) createBaUnit
+     * org.sola.webservices.transferobjects.administrative.BaUnitAreaTO)
+     * createBaUnit
      * @throws WebServiceClientException
      */
     BaUnitAreaTO createBaUnitArea(String baUnitId, BaUnitAreaTO baUnitAreaTO) throws WebServiceClientException;
 
     /**
-     * Creates a new BA Unit with a default status of pending and a default type of
-     * basicPropertyUnit. Will also create a new Transaction record for the BA Unit if the Service
-     * is not already associated to a Transaction.
+     * Creates a new BA Unit with a default status of pending and a default type
+     * of basicPropertyUnit. Will also create a new Transaction record for the
+     * BA Unit if the Service is not already associated to a Transaction.
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE} role.</p>
+     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * role.</p>
      *
-     * @param serviceId The identifier of the Service the BA Unit is being created as part of
+     * @param serviceId The identifier of the Service the BA Unit is being
+     * created as part of
      * @param baUnitTO The details of the BA Unit to create
      * @return The new BA Unit
      * @see #saveBaUnit(java.lang.String,
@@ -122,15 +142,17 @@ public interface AdministrativeClient extends AbstractWSClient {
     BaUnitTO createBaUnit(String serviceId, BaUnitTO baUnitTO) throws WebServiceClientException;
 
     /**
-     * Saves any updates to an existing BA Unit. Can also be used to create a new BA Unit, however
-     * this method does not set any default values on the BA Unit like
-     * {@linkplain #createBaUnit(java.lang.String, org.sola.webservices.transferobjects.administrative.BaUnitTO)
-     * createBaUnit}. Will also create a new Transaction record for the BA Unit if the Service is
-     * not already associated to a Transaction.
+     * Saves any updates to an existing BA Unit. Can also be used to create a
+     * new BA Unit, however this method does not set any default values on the
+     * BA Unit like null null     {@linkplain #createBaUnit(java.lang.String, org.sola.webservices.transferobjects.administrative.BaUnitTO)
+     * createBaUnit}. Will also create a new Transaction record for the BA Unit
+     * if the Service is not already associated to a Transaction.
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE} role</p>
+     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * role</p>
      *
-     * @param serviceId The identifier of the Service the BA Unit is being created as part of
+     * @param serviceId The identifier of the Service the BA Unit is being
+     * created as part of
      * @param baUnitTO The details of the BA Unit to create
      * @return The updated BA Unit
      * @throws WebServiceClientException
@@ -147,8 +169,8 @@ public interface AdministrativeClient extends AbstractWSClient {
     BaUnitTO getBaUnitById(String id) throws WebServiceClientException;
 
     /**
-     * Locates a BA Unit using by matching the first part and last part of the BA Unit name. First
-     * part and last part must be an exact match.
+     * Locates a BA Unit using by matching the first part and last part of the
+     * BA Unit name. First part and last part must be an exact match.
      *
      * @param nameFirstpart The first part of the BA Unit name
      * @param nameLastpart The last part of the BA Unit name
@@ -162,43 +184,50 @@ public interface AdministrativeClient extends AbstractWSClient {
      * Retrieves the list of BA Unit associated with the specified Service.
      *
      * @param serviceId The Service identifier
-     * @return The list of BA Unit associated with the service or an empty list if the service does
-     * not have any BA Units associated with it.
+     * @return The list of BA Unit associated with the service or an empty list
+     * if the service does not have any BA Units associated with it.
      * @throws WebServiceClientException
      */
     List<BaUnitTO> getBaUnitsByServiceId(String serviceId) throws WebServiceClientException;
 
     /**
-     * Reverses the cancellation / termination of a BA Unit by removing the BA Unit Target created
-     * by {@linkplain #terminateBaUnit(java.lang.String, java.lang.String) terminateBaUnit}.
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE} role.</p>
+     * Reverses the cancellation / termination of a BA Unit by removing the BA
+     * Unit Target created by
+     * {@linkplain #terminateBaUnit(java.lang.String, java.lang.String) terminateBaUnit}.
+     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * role.</p>
      *
-     * @param baUnitId The identifier of the BA Unit to reverse the cancellation for.
+     * @param baUnitId The identifier of the BA Unit to reverse the cancellation
+     * for.
      * @return The details of the BA Unit that has had its termination canceled.
      * @throws WebServiceClientException
      */
     BaUnitTO cancelBaUnitTermination(String baUnitId) throws WebServiceClientException;
 
     /**
-     * Identifies a BA Unit as subject to cancellation / termination by linking the BA Unit to a
-     * Transaction via the administrative.ba_unit_target association. The BA Unit is not canceled /
-     * terminated until the application canceling the BA Unit is approved.
+     * Identifies a BA Unit as subject to cancellation / termination by linking
+     * the BA Unit to a Transaction via the administrative.ba_unit_target
+     * association. The BA Unit is not canceled / terminated until the
+     * application canceling the BA Unit is approved.
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE} role.</p>
+     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * role.</p>
      *
      * @param baUnitId The identifier of the BA Unit to be canceled / terminated
-     * @param serviceId The identifier of the service that is canceling / terminating the BA Unit
+     * @param serviceId The identifier of the service that is canceling /
+     * terminating the BA Unit
      * @return The BA Unit that will be canceled / terminated.
      * @throws WebServiceClientException
      */
     BaUnitTO terminateBaUnit(String baUnitId, String serviceId) throws WebServiceClientException;
 
     /**
-     * Retrieves the list of BA Unit Areas associated with the specified BA Unit Id.
+     * Retrieves the list of BA Unit Areas associated with the specified BA Unit
+     * Id.
      *
      * @param baUnitId The Service identifier
-     * @return The list of BA Unit associated with the service or an empty list if the service does
-     * not have any BA Units associated with it.
+     * @return The list of BA Unit associated with the service or an empty list
+     * if the service does not have any BA Units associated with it.
      * @throws WebServiceClientException
      */
     BaUnitAreaTO getBaUnitAreas(String baUnitId) throws WebServiceClientException;
@@ -214,17 +243,24 @@ public interface AdministrativeClient extends AbstractWSClient {
     BaUnitTO getBaUnitWithCadObject(String nameFirstPart, String nameLastPart, String colist) throws WebServiceClientException;
 
     /**
-     * Creates the Strata Properties required for a Unit Development. This method can be used to
-     * create the initial set of properties based on a UnitParcelGroup as well as to create any
-     * additional properties when the Unit Parcel Group is changed.
+     * Creates the Strata Properties required for a Unit Development. This
+     * method can be used to create the initial set of properties based on a
+     * UnitParcelGroup as well as to create any additional properties when the
+     * Unit Parcel Group is changed.
      *
      * @param serviceId The identifier for the Create Unit Title Service
      * @param group The Unit Parcel Group
-     * @param baUnitIds The list of BA Units representing the underlying properties for the Unit
-     * Development (Typically the list of BA Units linked to the application as Application
-     * Properties). This list of BA Units is checked to ensure only valid properties are linked as
-     * the underlying properties for the unit development.
+     * @param baUnitIds The list of BA Units representing the underlying
+     * properties for the Unit Development (Typically the list of BA Units
+     * linked to the application as Application Properties). This list of BA
+     * Units is checked to ensure only valid properties are linked as the
+     * underlying properties for the unit development.
      * @throws WebServiceClientException
      */
     void createStrataProperties(String serviceId, String unitParcelGroupName, List<String> baUnitIds) throws WebServiceClientException;
+
+    /**
+     * Saves an instance of a certificate print
+     */
+    CertificatePrintTO saveCertificatePrint(CertificatePrintTO print) throws WebServiceClientException;
 }
