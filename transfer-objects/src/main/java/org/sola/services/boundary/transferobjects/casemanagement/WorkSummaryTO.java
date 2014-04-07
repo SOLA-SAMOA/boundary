@@ -25,6 +25,7 @@
  */
 package org.sola.services.boundary.transferobjects.casemanagement;
 
+import java.math.BigDecimal;
 import org.sola.services.common.contracts.AbstractTO;
 
 /**
@@ -44,6 +45,7 @@ public class WorkSummaryTO extends AbstractTO {
     private int inProgressTo;
     private int onRequisitionTo;
     private int overdue;
+    private BigDecimal serviceFee;
     private String overdueApplications;
     private String onRequisitionApplications;
 
@@ -162,4 +164,12 @@ public class WorkSummaryTO extends AbstractTO {
     public void setOnRequisitionTo(int onRequisitionTo) {
         this.onRequisitionTo = onRequisitionTo;
     }  
+
+    public BigDecimal getServiceFee() {
+        return serviceFee;
+    }
+
+    public void setServiceFee(BigDecimal serviceFee) {
+        this.serviceFee = serviceFee;
+    }
 }
