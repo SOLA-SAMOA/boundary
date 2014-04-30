@@ -104,7 +104,7 @@ public class Administrative extends AbstractWebService {
                 BaUnit newBaUnit = administrativeEJB.createBaUnit(
                         serviceIdTmp,
                         GenericTranslator.fromTO(baUnitTOTmp, BaUnit.class,
-                        administrativeEJB.getBaUnitById(baUnitTOTmp.getId())));
+                                administrativeEJB.getBaUnitById(baUnitTOTmp.getId())));
                 result[0] = GenericTranslator.toTO(newBaUnit, BaUnitTO.class);
             }
         });
@@ -139,7 +139,7 @@ public class Administrative extends AbstractWebService {
                     BaUnit newBaUnit = administrativeEJB.saveBaUnit(
                             serviceIdTmp,
                             GenericTranslator.fromTO(baUnitTOTmp, BaUnit.class,
-                            administrativeEJB.getBaUnitById(baUnitTOTmp.getId())));
+                                    administrativeEJB.getBaUnitById(baUnitTOTmp.getId())));
                     result[0] = GenericTranslator.toTO(newBaUnit, BaUnitTO.class);
                 }
             }
@@ -295,7 +295,7 @@ public class Administrative extends AbstractWebService {
             public void run() {
                 result[0] = GenericTranslator.toTO(
                         administrativeEJB.getBaUnitByCode(nameFirstpartTmp,
-                        nameLastpartTmp), BaUnitTO.class);
+                                nameLastpartTmp), BaUnitTO.class);
             }
         });
 
@@ -354,7 +354,7 @@ public class Administrative extends AbstractWebService {
                 BaUnitArea newBaUnitArea = administrativeEJB.createBaUnitArea(
                         baUnitIdTmp,
                         GenericTranslator.fromTO(baUnitAreaTOTmp, BaUnitArea.class,
-                        administrativeEJB.getBaUnitAreas(baUnitIdTmp)));
+                                administrativeEJB.getBaUnitAreas(baUnitIdTmp)));
                 result[0] = GenericTranslator.toTO(newBaUnitArea, BaUnitAreaTO.class);
             }
         });
@@ -422,9 +422,8 @@ public class Administrative extends AbstractWebService {
     }
 
     /**
-     * See {@linkplain AdministrativeEJB#saveCertificatePrint(java.lang.String,
-     * org.sola.services.ejb.administrative.repository.entities.BaUnitArea)
-     * AdministrativeEJB.createBaUnitArea}
+     * See {@linkplain AdministrativeEJB#saveCertificatePrint(org.sola.services.ejb.administrative.repository.entities.CertificatePrint)
+     * AdministrativeEJB.saveCertificatePrint}
      *
      * @throws SOLAFault
      * @throws UnhandledFault
@@ -448,5 +447,61 @@ public class Administrative extends AbstractWebService {
             }
         });
         return (CertificatePrintTO) result[0];
+    }
+
+    /**
+     * See {{@linkplain AdministrativeEJB#terminateStrataProperties(java.lang.String,
+     * org.sola.services.ejb.cadastre.repository.entities.UnitParcelGroup, java.util.List)
+     * AdministrativeEJB.terminateStrataProperties}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     * @throws OptimisticLockingFault
+     */
+    @WebMethod(operationName = "TerminateStrataProperties")
+    public void TerminateStrataProperties(
+            @WebParam(name = "serviceId") String serviceId,
+            @WebParam(name = "unitParcelGroupName") String unitParcelGroupName,
+            @WebParam(name = "baUnitIds") List<String> baUnitIds)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault, OptimisticLockingFault {
+
+        final String serviceIdTmp = serviceId;
+        final String unitParcelGroupNameTmp = unitParcelGroupName;
+        final List<String> baUnitIdsTmp = baUnitIds;
+
+        runUpdate(wsContext, new Runnable() {
+            @Override
+            public void run() {
+                administrativeEJB.terminateStrataProperties(serviceIdTmp,
+                        cadastreEJB.getUnitParcelGroupByName(unitParcelGroupNameTmp), baUnitIdsTmp);
+            }
+        });
+    }
+
+    /**
+     * See {{@linkplain AdministrativeEJB#undoTerminateStrataProperties(java.lang.String, java.util.List)
+     * AdministrativeEJB.undoTerminateStrataProperties}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     * @throws OptimisticLockingFault
+     */
+    @WebMethod(operationName = "UndoTerminateStrataProperties")
+    public void UndoTerminateStrataProperties(
+            @WebParam(name = "serviceId") String serviceId,
+            @WebParam(name = "baUnitIds") List<String> baUnitIds)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault, OptimisticLockingFault {
+
+        final String serviceIdTmp = serviceId;
+        final List<String> baUnitIdsTmp = baUnitIds;
+
+        runUpdate(wsContext, new Runnable() {
+            @Override
+            public void run() {
+                administrativeEJB.undoTerminateStrataProperties(serviceIdTmp, baUnitIdsTmp);
+            }
+        });
     }
 }

@@ -257,4 +257,32 @@ public class AdministrativeClientImpl extends AbstractWSClientImpl
         }
         return result;
     }
+
+    @Override
+    public void terminateStrataProperties(String serviceId, String unitParcelGroupName, 
+            List<String> baUnitIds) throws WebServiceClientException {
+        final String methodName = AdministrativeClient.TERMINATE_STRATA_PROPERTIES;
+        try {
+            beforeWebMethod(methodName, serviceId, unitParcelGroupName, baUnitIds);
+            getPort().terminateStrataProperties(serviceId, unitParcelGroupName, baUnitIds);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, null, serviceId, unitParcelGroupName, baUnitIds);
+        }
+    }
+
+    @Override
+    public void undoTerminateStrataProperties(String serviceId, List<String> baUnitIds)
+            throws WebServiceClientException {
+        final String methodName = AdministrativeClient.UNDO_TERMINATE_STRATA_PROPERTIES;
+        try {
+            beforeWebMethod(methodName, serviceId, baUnitIds);
+            getPort().undoTerminateStrataProperties(serviceId, baUnitIds);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, null, serviceId, baUnitIds);
+        }
+    }
 }

@@ -105,12 +105,24 @@ public interface AdministrativeClient extends AbstractWSClient {
      * Administrative.createStrataProperties - Identifier for the createStrataProperties method
      */
     public static final String CREATE_STRATA_PROPERTIES = SERVICE_NAME + "createStrataProperties";
+    /*
+     * Administrative.saveCertificatePrint - Identifier for the saveCertificatePrint method
+     */
     public static final String SAVE_CERTIFICATE_PRINT = SERVICE_NAME + "saveCertificatePrint";
+    /*
+     * Administrative.terminateStrataProperties - Identifier for the terminateStrataProperties method
+     */
+    public static final String TERMINATE_STRATA_PROPERTIES = SERVICE_NAME + "terminateStrataProperties";
+    /*
+     * Administrative.undoTerminateStrataProperties - Identifier for the undoTerminateStrataProperties method
+     */
+    public static final String UNDO_TERMINATE_STRATA_PROPERTIES = SERVICE_NAME + "undoTerminateStrataProperties";
 
     /**
      * Creates a new BA Unit Area for a BaUnitId
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * <p>
+     * Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
      * role.</p>
      *
      * @param baUnitId The identifier of the area the BA Unit is being created
@@ -128,7 +140,8 @@ public interface AdministrativeClient extends AbstractWSClient {
      * of basicPropertyUnit. Will also create a new Transaction record for the
      * BA Unit if the Service is not already associated to a Transaction.
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * <p>
+     * Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
      * role.</p>
      *
      * @param serviceId The identifier of the Service the BA Unit is being
@@ -144,11 +157,12 @@ public interface AdministrativeClient extends AbstractWSClient {
     /**
      * Saves any updates to an existing BA Unit. Can also be used to create a
      * new BA Unit, however this method does not set any default values on the
-     * BA Unit like null null     {@linkplain #createBaUnit(java.lang.String, org.sola.webservices.transferobjects.administrative.BaUnitTO)
+     * BA Unit like null null null null null null     {@linkplain #createBaUnit(java.lang.String, org.sola.webservices.transferobjects.administrative.BaUnitTO)
      * createBaUnit}. Will also create a new Transaction record for the BA Unit
      * if the Service is not already associated to a Transaction.
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * <p>
+     * Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
      * role</p>
      *
      * @param serviceId The identifier of the Service the BA Unit is being
@@ -194,7 +208,8 @@ public interface AdministrativeClient extends AbstractWSClient {
      * Reverses the cancellation / termination of a BA Unit by removing the BA
      * Unit Target created by
      * {@linkplain #terminateBaUnit(java.lang.String, java.lang.String) terminateBaUnit}.
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * <p>
+     * Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
      * role.</p>
      *
      * @param baUnitId The identifier of the BA Unit to reverse the cancellation
@@ -210,7 +225,8 @@ public interface AdministrativeClient extends AbstractWSClient {
      * association. The BA Unit is not canceled / terminated until the
      * application canceling the BA Unit is approved.
      *
-     * <p>Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
+     * <p>
+     * Requires the {@linkplain RolesConstants#ADMINISTRATIVE_BA_UNIT_SAVE}
      * role.</p>
      *
      * @param baUnitId The identifier of the BA Unit to be canceled / terminated
@@ -263,4 +279,22 @@ public interface AdministrativeClient extends AbstractWSClient {
      * Saves an instance of a certificate print
      */
     CertificatePrintTO saveCertificatePrint(CertificatePrintTO print) throws WebServiceClientException;
+
+    /**
+     * Ticket #68. Processes a list of Strata BaUnits and marks them for
+     * cancellation
+     *
+     * @param serviceId The service to link the cancellation to
+     * @param baUnitIds The list of BaUnits to cancel.
+     */
+    void terminateStrataProperties(String serviceId, String unitParcelGroupName,
+            List<String> baUnitIds) throws WebServiceClientException;
+
+    /**
+     * Ticket #68. Reverses the cancellation flag for a list of Strata BaUnits
+     *
+     * @param baUnitIds The list of BaUnits to undo the termination flag.
+     */
+    void undoTerminateStrataProperties(String serviceId, List<String> baUnitIds)
+            throws WebServiceClientException;
 }

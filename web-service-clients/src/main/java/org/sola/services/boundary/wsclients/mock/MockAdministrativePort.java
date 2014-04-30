@@ -42,7 +42,8 @@ import org.sola.webservices.transferobjects.administrative.CertificatePrintTO;
  * {@linkplain org.sola.webservices.administrative.Administrative} interface.
  * Uses the {@linkplain MockServiceManager} to obtain the appropriate mock
  * response for each web method.
- * <p>Each method mocked by this class has a public constant defined that can be
+ * <p>
+ * Each method mocked by this class has a public constant defined that can be
  * used to reference a mock response object from the
  * {@linkplain MockServiceManager}. To set a response object for a web method,
  * use the {@linkplain MockServiceManager#setResponse(String, Object)} method
@@ -366,6 +367,39 @@ public class MockAdministrativePort implements Administrative {
         } catch (Exception ex) {
             processExceptionUpdate(ex);
             return null;
+        }
+    }
+
+    /**
+     * Response Key = AdministrativeClient.TERMINATE_STRATA_PROPERTIES
+     *
+     * @return void
+     */
+    @Override
+    public void terminateStrataProperties(String serviceId, String unitParcelGroupName, 
+            List<String> baUnitIds)
+            throws OptimisticLockingFault, SOLAAccessFault, SOLAFault, UnhandledFault {
+        try {
+            getManager().getResponse(AdministrativeClient.TERMINATE_STRATA_PROPERTIES,
+                    Void.class, null, serviceId, unitParcelGroupName, baUnitIds);
+        } catch (Exception ex) {
+            processExceptionUpdate(ex);
+        }
+    }
+    
+        /**
+     * Response Key = AdministrativeClient.UNDO_TERMINATE_STRATA_PROPERTIES
+     *
+     * @return void
+     */
+    @Override
+    public void undoTerminateStrataProperties(String serviceId, List<String> baUnitIds)
+            throws OptimisticLockingFault, SOLAAccessFault, SOLAFault, UnhandledFault {
+        try {
+            getManager().getResponse(AdministrativeClient.UNDO_TERMINATE_STRATA_PROPERTIES,
+                    Void.class, null, serviceId, baUnitIds);
+        } catch (Exception ex) {
+            processExceptionUpdate(ex);
         }
     }
 }
