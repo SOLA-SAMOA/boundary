@@ -25,6 +25,7 @@ public class StrataPropertyTO extends AbstractTO {
     private Integer unitEntitlement;
     private String unitParcelTypeCode;
     private String pendingActionCode;
+    private String unitParcels;
 
     public StrataPropertyTO() {
         super();
@@ -124,5 +125,13 @@ public class StrataPropertyTO extends AbstractTO {
 
     public void setPendingActionCode(String pendingActionCode) {
         this.pendingActionCode = pendingActionCode;
+    }
+
+    public String getUnitParcels() {
+        return unitParcels;
+    }
+
+    public void setUnitParcels(String unitParcels) {
+        this.unitParcels = unitParcels;
     }
 }
