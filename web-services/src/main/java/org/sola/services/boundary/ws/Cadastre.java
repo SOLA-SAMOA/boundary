@@ -1,30 +1,35 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations (FAO). All rights
- * reserved.
+ * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * (FAO). All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice,this list of conditions
- * and the following disclaimer. 2. Redistributions in binary form must reproduce the above
- * copyright notice,this list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution. 3. Neither the name of FAO nor the names of its
- * contributors may be used to endorse or promote products derived from this software without
- * specific prior written permission.
+ * 1. Redistributions of source code must retain the above copyright notice,this
+ * list of conditions and the following disclaimer. 2. Redistributions in binary
+ * form must reproduce the above copyright notice,this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. 3. Neither the name of FAO nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
- * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.services.boundary.ws;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -51,7 +56,8 @@ import org.sola.services.ejb.transaction.repository.entities.TransactionType;
 import org.sola.services.ejb.transaction.repository.entities.TransactionUnitParcels;
 
 /**
- * Web Service Boundary class to expose {@linkplain org.sola.services.ejb.cadastre.businesslogic.CadastreEJB}
+ * Web Service Boundary class to expose
+ * {@linkplain org.sola.services.ejb.cadastre.businesslogic.CadastreEJB}
  * methods.
  */
 @WebService(serviceName = "cadastre-service", targetNamespace = ServiceConstants.CADASTRE_WS_NAMESPACE)
@@ -250,9 +256,9 @@ public class Cadastre extends AbstractWebService {
 
             @Override
             public void run() {
-                TransactionCadastreChange targetTransaction =
-                        transactionEJB.getTransactionById(
-                        transactionTO.getId(), TransactionCadastreChange.class);
+                TransactionCadastreChange targetTransaction
+                        = transactionEJB.getTransactionById(
+                                transactionTO.getId(), TransactionCadastreChange.class);
                 TransactionCadastreChange transactionCadastreChange = GenericTranslator.fromTO(
                         transactionTO, TransactionCadastreChange.class, targetTransaction);
                 result[0] = transactionEJB.saveTransaction(
@@ -422,12 +428,12 @@ public class Cadastre extends AbstractWebService {
 
             @Override
             public void run() {
-                TransactionCadastreRedefinition targetTransaction =
-                        transactionEJB.getTransactionById(
-                        transactionTOTmp.getId(), TransactionCadastreRedefinition.class);
-                TransactionCadastreRedefinition transactionCadastreRedefinition =
-                        GenericTranslator.fromTO(
-                        transactionTOTmp, TransactionCadastreRedefinition.class, targetTransaction);
+                TransactionCadastreRedefinition targetTransaction
+                        = transactionEJB.getTransactionById(
+                                transactionTOTmp.getId(), TransactionCadastreRedefinition.class);
+                TransactionCadastreRedefinition transactionCadastreRedefinition
+                        = GenericTranslator.fromTO(
+                                transactionTOTmp, TransactionCadastreRedefinition.class, targetTransaction);
 
                 result[0] = transactionEJB.saveTransaction(transactionCadastreRedefinition,
                         TransactionType.REDEFINE_CADASTRE, languageCodeTmp);
@@ -460,7 +466,7 @@ public class Cadastre extends AbstractWebService {
             public void run() {
                 result[0] = GenericTranslator.toTO(
                         transactionEJB.getTransactionByServiceId(
-                        serviceIdTmp, false, TransactionCadastreRedefinition.class),
+                                serviceIdTmp, false, TransactionCadastreRedefinition.class),
                         TransactionCadastreRedefinitionTO.class);
             }
         });
@@ -547,7 +553,7 @@ public class Cadastre extends AbstractWebService {
             public void run() {
                 result[0] = GenericTranslator.toTO(
                         transactionEJB.getTransactionByServiceId(serviceIdTmp, true,
-                        TransactionUnitParcels.class), TransactionUnitParcelsTO.class);
+                                TransactionUnitParcels.class), TransactionUnitParcelsTO.class);
             }
         });
 
@@ -579,12 +585,12 @@ public class Cadastre extends AbstractWebService {
 
             @Override
             public void run() {
-                TransactionUnitParcels targetTransaction =
-                        transactionEJB.getTransactionById(
-                        transactionTOTmp.getId(), TransactionUnitParcels.class);
-                TransactionUnitParcels transactionUnitParcels =
-                        GenericTranslator.fromTO(
-                        transactionTOTmp, TransactionUnitParcels.class, targetTransaction);
+                TransactionUnitParcels targetTransaction
+                        = transactionEJB.getTransactionById(
+                                transactionTOTmp.getId(), TransactionUnitParcels.class);
+                TransactionUnitParcels transactionUnitParcels
+                        = GenericTranslator.fromTO(
+                                transactionTOTmp, TransactionUnitParcels.class, targetTransaction);
 
                 result[0] = transactionEJB.saveTransaction(transactionUnitParcels,
                         TransactionType.RECORD_UNIT_PLAN, languageCodeTmp);
@@ -592,5 +598,34 @@ public class Cadastre extends AbstractWebService {
         });
 
         return (List<ValidationResult>) result[0];
+    }
+
+    /**
+     * See
+     * {@linkplain org.sola.services.ejb.cadastre.businesslogic.CadastreEJB#changeParcelAttribute(java.lang.String, 
+     * java.lang.String, java.lang.String, java.math.BigDecimal, boolean)  CadastreEJB.changeParcelAttribute}
+     *
+     * @throws OptimisticLockingFault
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "ChangeParcelAttribute")
+    public void ChangeParcelAttribute(
+            @WebParam(name = "parcelId") final String parcelId,
+            @WebParam(name = "namePart1") final String namePart1,
+            @WebParam(name = "namePart2") final String namePart2,
+            @WebParam(name = "officialArea") final BigDecimal officialArea,
+            @WebParam(name = "makeHistoric") final boolean makeHistoric)
+            throws OptimisticLockingFault, SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        runUpdate(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                cadastreEJB.changeParcelAttribute(parcelId, namePart1, namePart2,
+                        officialArea, makeHistoric);
+            }
+        });
     }
 }

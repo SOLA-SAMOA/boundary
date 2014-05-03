@@ -25,6 +25,7 @@
  */
 package org.sola.services.boundary.wsclients;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.xml.namespace.QName;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
@@ -338,5 +339,21 @@ public class CadastreClientImpl extends AbstractWSClientImpl implements Cadastre
             afterWebMethod(methodName, result, transactionUnitParcelsTO, languageCode);
         }
         return result;
+    }
+    
+    @Override
+    public void changeParcelAttribute(String parcelId, String namePart1,
+            String namePart2, BigDecimal officialArea, boolean makeHistoric)
+            throws WebServiceClientException {
+        final String methodName = CadastreClient.CHANGE_PARCEL_ATTRIBUTE;
+        try {
+            beforeWebMethod(methodName, parcelId, namePart1, namePart2, officialArea, makeHistoric);
+            getPort().changeParcelAttribute(parcelId, namePart1, namePart2, officialArea, makeHistoric);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, null, parcelId, namePart1, namePart2, 
+                    officialArea, makeHistoric);
+        }
     }
 }
