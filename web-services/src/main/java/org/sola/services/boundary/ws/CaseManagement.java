@@ -488,6 +488,7 @@ public class CaseManagement extends AbstractWebService {
         return (SourceTO) result[0];
     }
 
+    @WebMethod(operationName = "AttachPowerOfAttorneyToTransaction")
     public PowerOfAttorneyTO attachPowerOfAttorneyToTransaction(
             @WebParam(name = "serviceId") final String serviceId,
             @WebParam(name = "powerOfAttorney") final PowerOfAttorneyTO powerOfAttorney,
