@@ -28,9 +28,12 @@
 package org.sola.services.boundary.wsclients;
 
 import java.util.List;
+import org.sola.common.ConfigConstants;
+import org.sola.common.RolesConstants;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
 import org.sola.webservices.admin.BrTO;
 import org.sola.webservices.admin.LanguageTO;
+import org.sola.webservices.admin.PublicUserActivityTO;
 import org.sola.webservices.admin.SettingTO;
 import org.sola.webservices.transferobjects.security.GroupSummaryTO;
 import org.sola.webservices.transferobjects.security.GroupTO;
@@ -122,6 +125,10 @@ public interface AdminClient extends AbstractWSClient {
      * Admin.getSetting - Identifier for the getSetting method
      */
     public static final String GET_SETTING = SERVICE_NAME + "getSetting";
+    /**
+     * Admin.savePublicUserActivity - Identifier for the savePublicUserActivity method
+     */
+    public static final String SAVE_PUBLIC_USER_ACTIVITY = SERVICE_NAME + "savePublicUserActivity";
 
     /**
      * Returns the details for the currently authenticated user. <p>No role is required to execute
@@ -306,4 +313,13 @@ public interface AdminClient extends AbstractWSClient {
      * @return The override value for the setting or the defaultValue.
      */
     String getSetting(String name, String defaultValue) throws WebServiceClientException;
+    
+    /**
+     * Can be used to create a public user activity. <p> Requires the {@linkplain RolesConstants.ADMIN_PUBLIC_ONLY} role. </p>
+     *
+     * @param publicUserActivityTO The publicUserActivity to save.
+     * @return The updated/new public user activity.
+     * @throws WebServiceClientException
+     */
+    PublicUserActivityTO savePublicUserActivity(PublicUserActivityTO publicUserActivityTO) throws WebServiceClientException;
 }

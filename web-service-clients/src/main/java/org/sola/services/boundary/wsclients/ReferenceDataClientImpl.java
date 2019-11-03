@@ -48,6 +48,7 @@ import org.sola.webservices.transferobjects.referencedata.IdTypeTO;
 import org.sola.webservices.transferobjects.referencedata.MortgageTypeTO;
 import org.sola.webservices.transferobjects.referencedata.PartyTypeTO;
 import org.sola.webservices.transferobjects.referencedata.PartyRoleTypeTO;
+import org.sola.webservices.transferobjects.referencedata.PublicUserActivityTypeTO;
 import org.sola.webservices.transferobjects.referencedata.RegistrationStatusTypeTO;
 import org.sola.webservices.transferobjects.referencedata.RequestCategoryTypeTO;
 import org.sola.webservices.transferobjects.referencedata.RequestTypeTO;
@@ -614,5 +615,25 @@ public class ReferenceDataClientImpl extends AbstractWSClientImpl implements Ref
     @Override
     public List<BaUnitRelTypeTO> getBaUnitRelTypes() throws WebServiceClientException {
         return getBaUnitRelTypes(getLanguageCode());
+    }
+    
+    @Override
+    public List<PublicUserActivityTypeTO> getPublicUserActivityTypes(String lang) throws WebServiceClientException {
+        List<PublicUserActivityTypeTO> result = null;
+        final String methodName = ReferenceDataClient.GET_PUBLIC_USER_ACTIVITY_TYPES;
+        try {
+            beforeWebMethod(methodName, lang);
+            result = getPort().getPublicUserActivityTypes(lang);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, lang);
+        }
+        return result;
+    }
+
+    @Override
+    public List<PublicUserActivityTypeTO> getPublicUserActivityTypes() throws WebServiceClientException {
+        return getPublicUserActivityTypes(getLanguageCode());
     }
 }

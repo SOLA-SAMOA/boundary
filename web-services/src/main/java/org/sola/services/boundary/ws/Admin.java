@@ -42,6 +42,7 @@ import org.sola.services.boundary.transferobjects.security.RoleTO;
 import org.sola.services.boundary.transferobjects.security.UserTO;
 import org.sola.services.boundary.transferobjects.system.BrTO;
 import org.sola.services.boundary.transferobjects.system.LanguageTO;
+import org.sola.services.boundary.transferobjects.system.PublicUserActivityTO;
 import org.sola.services.boundary.transferobjects.system.SettingTO;
 import org.sola.services.common.ServiceConstants;
 import org.sola.services.common.contracts.GenericTranslator;
@@ -49,6 +50,7 @@ import org.sola.services.common.faults.*;
 import org.sola.services.common.webservices.AbstractWebService;
 import org.sola.services.ejb.system.businesslogic.SystemEJBLocal;
 import org.sola.services.ejb.system.repository.entities.Br;
+import org.sola.services.ejb.system.repository.entities.PublicUserActivity;
 import org.sola.services.ejbs.admin.businesslogic.AdminEJBLocal;
 import org.sola.services.ejbs.admin.businesslogic.repository.entities.Group;
 import org.sola.services.ejbs.admin.businesslogic.repository.entities.Role;
@@ -543,5 +545,36 @@ public class Admin extends AbstractWebService {
         });
 
         return result[0];
+    }
+    
+    /**
+     * See {@linkplain org.sola.services.ejb.system.businesslogic.SystemEJB#saveBr(org.sola.services.ejb.system.repository.entities.Br)
+     * SystemEJB.saveBr}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     * @throws OptimisticLockingFault
+     * @throws SOLAValidationFault
+     */
+    @WebMethod(operationName = "SavePublicUserActivity")
+    public PublicUserActivityTO SavePublicUserActivity(@WebParam(name = "publicUserActivity") PublicUserActivityTO publicUserActivity)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault, OptimisticLockingFault, SOLAValidationFault {
+        final Object[] params = {publicUserActivity};
+        final Object[] result = {null};
+
+        runUpdateValidation(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                PublicUserActivityTO publicUserActivityTO = (PublicUserActivityTO) params[0];
+                PublicUserActivity publicUserActivity = systemEJB.getPublicUserActivity(publicUserActivityTO.getId());
+                result[0] = GenericTranslator.toTO(
+                        systemEJB.savePublicUserActivity(GenericTranslator.fromTO(publicUserActivityTO, PublicUserActivity.class, publicUserActivity)),
+                        PublicUserActivityTO.class);
+            }
+        });
+
+        return (PublicUserActivityTO) result[0];
     }
 }

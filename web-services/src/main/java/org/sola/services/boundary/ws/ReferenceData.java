@@ -60,6 +60,7 @@ import org.sola.services.boundary.transferobjects.referencedata.MortgageTypeTO;
 import org.sola.services.boundary.transferobjects.referencedata.PartyTypeTO;
 import org.sola.services.boundary.transferobjects.referencedata.PartyRoleTypeTO;
 import org.sola.services.boundary.transferobjects.referencedata.PresentationFormTypeTO;
+import org.sola.services.boundary.transferobjects.referencedata.PublicUserActivityTypeTO;
 import org.sola.services.boundary.transferobjects.referencedata.RegistrationStatusTypeTO;
 import org.sola.services.boundary.transferobjects.referencedata.RequestCategoryTypeTO;
 import org.sola.services.boundary.transferobjects.referencedata.RequestTypeTO;
@@ -103,6 +104,7 @@ import org.sola.services.ejb.system.businesslogic.SystemEJBLocal;
 import org.sola.services.ejb.system.repository.entities.BrSeverityType;
 import org.sola.services.ejb.system.repository.entities.BrTechnicalType;
 import org.sola.services.ejb.system.repository.entities.BrValidationTargetType;
+import org.sola.services.ejb.system.repository.entities.PublicUserActivityType;
 import org.sola.services.ejb.transaction.businesslogic.TransactionEJBLocal;
 import org.sola.services.ejb.transaction.repository.entities.RegistrationStatusType;
 
@@ -879,6 +881,33 @@ public class ReferenceData extends AbstractWebService {
 
         return (List<BaUnitRelTypeTO>) result[0];
     }
+    
+    /**
+     * See {@linkplain org.sola.services.ejb.system.businesslogic.SystemEJB#getPublicUserActivityTypes(java.lang.String)
+     * SystemEJB.getPublicUserActivityTypes}
+     *
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     */
+    @WebMethod(operationName = "GetPublicUserActivityTypes")
+    public List<PublicUserActivityTypeTO> GetPublicUserActivityTypes(String languageCode)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String languageCodeTmp = languageCode;
+        final Object[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = GenericTranslator.toTOList(
+                        systemEJB.getPublicUserActivityTypes(languageCodeTmp), PublicUserActivityTypeTO.class);
+            }
+        });
+
+        return (List<PublicUserActivityTypeTO>) result[0];
+    }
 
     /**
      * Supports saving of all SOLA Reference Data types. <p>Requires the {@linkplain RolesConstants#ADMIN_MANAGE_REFDATA}
@@ -1004,6 +1033,10 @@ public class ReferenceData extends AbstractWebService {
                     codeEntity = administrativeEJB.getCodeEntity(BaUnitRelType.class, refDataTO.getCode());
                     codeEntity = GenericTranslator.fromTO(refDataTO, BaUnitRelType.class, codeEntity);
                     administrativeEJB.saveCodeEntity(codeEntity);
+                } else if (refDataTO instanceof PublicUserActivityTypeTO) {
+                    codeEntity = administrativeEJB.getCodeEntity(PublicUserActivityType.class, refDataTO.getCode());
+                    codeEntity = GenericTranslator.fromTO(refDataTO, PublicUserActivityType.class, codeEntity);
+                    systemEJB.saveCodeEntity(codeEntity);
                 }
 
                 result = GenericTranslator.toTO(codeEntity, refDataTO.getClass());

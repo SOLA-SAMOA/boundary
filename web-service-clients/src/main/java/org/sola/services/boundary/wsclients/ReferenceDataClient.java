@@ -156,6 +156,10 @@ public interface ReferenceDataClient extends AbstractWSClient {
      * ReferenceData.getBaUnitRelTypes - Identifier for the getBaUnitRelTypes method
      */
     public static final String GET_BA_UNIT_REL_TYPES = SERVICE_NAME + "getBaUnitRelTypes";
+    /**
+     * ReferenceData.getPublicUserActivityTypes - Identifier for the getPublicUserActivityTypes method
+     */
+    public static final String GET_PUBLIC_USER_ACTIVITY_TYPES = SERVICE_NAME + "getPublicUserActivityTypes";
 
     /**
      * Retrieves all source.source_type code values using the default locale of the client to
@@ -567,4 +571,20 @@ public interface ReferenceDataClient extends AbstractWSClient {
      * @throws WebServiceClientException
      */
     List<BaUnitRelTypeTO> getBaUnitRelTypes() throws WebServiceClientException;
+    
+    /**
+     * Retrieves all system.public_user_activity_type code values.
+     *
+     * @param languageCode The language code to use for localization of display values.
+     * @throws WebServiceClientException
+     */
+    List<PublicUserActivityTypeTO> getPublicUserActivityTypes() throws WebServiceClientException;
+    
+    /**
+     * Retrieves all system.public_user_activity_type code values.
+     *
+     * @param languageCode The language code to use for localization of display values.
+     * @throws WebServiceClientException
+     */
+    List<PublicUserActivityTypeTO> getPublicUserActivityTypes(String lang) throws WebServiceClientException;
 }

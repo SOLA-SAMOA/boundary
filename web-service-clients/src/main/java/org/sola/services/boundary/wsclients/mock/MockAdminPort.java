@@ -419,4 +419,22 @@ public class MockAdminPort implements Admin {
             return null;
         }
     }
+    
+    
+    /**
+     * Response Key = AdminClient.SAVE_PUBLIC_USER_ACTIVITY
+     *
+     * @return default = puaTO parameter
+     */
+    @Override
+    public PublicUserActivityTO savePublicUserActivity(PublicUserActivityTO puaTO) throws SOLAFault, UnhandledFault, SOLAAccessFault,
+            OptimisticLockingFault {
+        PublicUserActivityTO defaultResponse = puaTO;
+        try {
+            return getManager().getResponse(AdminClient.SAVE_PUBLIC_USER_ACTIVITY, PublicUserActivityTO.class, defaultResponse, puaTO);
+        } catch (Exception ex) {
+            processExceptionUpdate(ex);
+            return null;
+        }
+    }
 }

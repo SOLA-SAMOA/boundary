@@ -338,4 +338,20 @@ public class AdminClientImpl extends AbstractWSClientImpl implements AdminClient
         }
         return result;
     }
+    
+    @Override
+    public PublicUserActivityTO savePublicUserActivity(PublicUserActivityTO publicUserActivityTO) throws WebServiceClientException {
+        PublicUserActivityTO result = null;
+        final String methodName = AdminClient.SAVE_PUBLIC_USER_ACTIVITY;
+        try {
+            beforeWebMethod(methodName, publicUserActivityTO);
+            result = getPort().savePublicUserActivity(publicUserActivityTO);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, publicUserActivityTO);
+        }
+        return result;
+    }
+
 }

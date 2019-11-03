@@ -581,4 +581,21 @@ public class MockReferenceDataPort implements ReferenceData {
             return null;
         }
     }
+    
+     /**
+     * Response Key = ReferenceDataClient.GET_PUBLIC_USER_ACTIVITY_TYPES
+     *
+     * @return default = MockTOFactory.createCommunicationTypes()
+     */
+    @Override
+    public List<PublicUserActivityTypeTO> getPublicUserActivityTypes(String arg0) throws SOLAAccessFault, SOLAFault, UnhandledFault {
+        List<CommunicationTypeTO> defaultResponse = MockTOFactory.createCommunicationTypes();
+        try {
+            return getManager().getResponse(ReferenceDataClient.GET_PUBLIC_USER_ACTIVITY_TYPES,
+                    List.class, defaultResponse, arg0);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return null;
+        }
+    }
 }
