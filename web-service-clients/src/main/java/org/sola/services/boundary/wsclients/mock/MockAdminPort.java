@@ -28,6 +28,7 @@
 package org.sola.services.boundary.wsclients.mock;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.sola.services.boundary.wsclients.AdminClient;
 import org.sola.webservices.admin.*;
@@ -434,6 +435,22 @@ public class MockAdminPort implements Admin {
             return getManager().getResponse(AdminClient.SAVE_PUBLIC_USER_ACTIVITY, PublicUserActivityTO.class, defaultResponse, puaTO);
         } catch (Exception ex) {
             processExceptionUpdate(ex);
+            return null;
+        }
+    }
+    
+     /**
+     * Response Key = AdminClient.GET_PUBLIC_USER_ACTIVITY_SUMMARY
+     *
+     * @return default = puaTO parameter
+     */
+    @Override
+    public List<PublicUserActivitySummaryTO> getPublicUserActivitySummary(PublicUserActivitySummaryParamsTO params) throws SOLAFault, UnhandledFault, SOLAAccessFault {
+        List<PublicUserActivitySummaryTO> defaultResponse = new ArrayList<PublicUserActivitySummaryTO>();
+        try {
+            return getManager().getResponse(AdminClient.GET_PUBLIC_USER_ACTIVITY_SUMMARY, List.class, defaultResponse, params);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
             return null;
         }
     }

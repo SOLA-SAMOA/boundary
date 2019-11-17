@@ -42,7 +42,8 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
     private static final String LOCAL_PART = "search-service";
 
     /**
-     * Creates a web service client class for the web service hosted at the specified URL
+     * Creates a web service client class for the web service hosted at the
+     * specified URL
      *
      * @param url The location of the service WSDL
      */
@@ -335,7 +336,7 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
     }
 
     @Override
-    public String getUnitDevelopmentNr(String serviceId, List<String> baUnitIds) 
+    public String getUnitDevelopmentNr(String serviceId, List<String> baUnitIds)
             throws WebServiceClientException {
         String result = null;
         final String methodName = SearchClient.GET_UNIT_DEVELOPMENT_NR;
@@ -351,7 +352,7 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
     }
 
     @Override
-    public List<StrataPropertyTO> getStrataProperties(String unitParcelGroupName, List<String> baUnitIds) 
+    public List<StrataPropertyTO> getStrataProperties(String unitParcelGroupName, List<String> baUnitIds)
             throws WebServiceClientException {
         List<StrataPropertyTO> result = null;
         final String methodName = SearchClient.GET_STRATA_PROPERTIES;
@@ -365,9 +366,9 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
         }
         return result;
     }
-    
-        @Override
-    public List<UnregisteredDealingTO> getUnregisteredDealings(String baUnitId) 
+
+    @Override
+    public List<UnregisteredDealingTO> getUnregisteredDealings(String baUnitId)
             throws WebServiceClientException {
         List<UnregisteredDealingTO> result = null;
         final String methodName = SearchClient.GET_UNREGISTERED_DEALINGS;
@@ -381,4 +382,21 @@ public class SearchClientImpl extends AbstractWSClientImpl implements SearchClie
         }
         return result;
     }
+
+    @Override
+    public boolean showCoTReport(String baUnitId, boolean isProduction) throws WebServiceClientException {
+        boolean result = false;
+        final String methodName = SearchClient.SHOW_COT_REPORT;
+        try {
+            beforeWebMethod(methodName, baUnitId, isProduction);
+            result = getPort().showCoTReport(baUnitId, isProduction);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, baUnitId, isProduction);
+        }
+        return result;
+
+    }
+
 }

@@ -128,6 +128,11 @@ public interface SearchClient extends AbstractWSClient {
      * Search.getUnregisteredDealings - Identifier for the getUnregisteredDealings method
      */
     public static final String GET_UNREGISTERED_DEALINGS = SERVICE_NAME + "getUnregisteredDealings";
+    /**
+     * Search.showCoTReport - Identifier for the showCoTReport method
+     */
+    public static final String SHOW_COT_REPORT = SERVICE_NAME + "showCoTReport";
+
 
     /**
      * Returns applications that have a lodged or approved status and are assigned to the currently
@@ -338,4 +343,13 @@ public interface SearchClient extends AbstractWSClient {
      * @throws WebServiceClientException
      */
     List<UnregisteredDealingTO> getUnregisteredDealings(String baUnitId) throws WebServiceClientException;
+    
+    /**
+     * Checks if the Certificate of Title REport should be displayed. 
+     * @param baUnitId
+     * @param isProduction
+     * @return
+     * @throws WebServiceClientException 
+     */
+    boolean showCoTReport(String baUnitId, boolean isProduction) throws WebServiceClientException;
 }

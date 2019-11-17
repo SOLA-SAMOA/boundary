@@ -27,12 +27,15 @@
  */
 package org.sola.services.boundary.wsclients;
 
+import java.util.Date;
 import java.util.List;
 import org.sola.common.ConfigConstants;
 import org.sola.common.RolesConstants;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
 import org.sola.webservices.admin.BrTO;
 import org.sola.webservices.admin.LanguageTO;
+import org.sola.webservices.admin.PublicUserActivitySummaryParamsTO;
+import org.sola.webservices.admin.PublicUserActivitySummaryTO;
 import org.sola.webservices.admin.PublicUserActivityTO;
 import org.sola.webservices.admin.SettingTO;
 import org.sola.webservices.transferobjects.security.GroupSummaryTO;
@@ -129,6 +132,11 @@ public interface AdminClient extends AbstractWSClient {
      * Admin.savePublicUserActivity - Identifier for the savePublicUserActivity method
      */
     public static final String SAVE_PUBLIC_USER_ACTIVITY = SERVICE_NAME + "savePublicUserActivity";
+    
+    /**
+     * Admin.getPublicUserActivitySummary - Identifier for the getPublicUserActivitySummary method
+     */
+    public static final String GET_PUBLIC_USER_ACTIVITY_SUMMARY = SERVICE_NAME + "getPublicUserActivitySummary";
 
     /**
      * Returns the details for the currently authenticated user. <p>No role is required to execute
@@ -322,4 +330,11 @@ public interface AdminClient extends AbstractWSClient {
      * @throws WebServiceClientException
      */
     PublicUserActivityTO savePublicUserActivity(PublicUserActivityTO publicUserActivityTO) throws WebServiceClientException;
+    
+    /**
+     * Retrieves the list of public user activity records during the specified dates. 
+     * <p> Requires the {@linkplain RolesConstants.REPORTS_PUBLIC_ACTIVITY} role. </p>
+     * @return 
+     */
+    List<PublicUserActivitySummaryTO> getPublicUserActivitySummary(PublicUserActivitySummaryParamsTO params); 
 }

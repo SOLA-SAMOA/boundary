@@ -38,11 +38,15 @@ import org.sola.webservices.transferobjects.search.*;
 /**
  * Provides a mock implementation for the
  * {@linkplain org.sola.webservices.search.Search} interface. Uses the
- * {@linkplain MockServiceManager} to obtain the appropriate mock response for each web method.
- * <p>Each method mocked by this class has a public constant defined that can be used to reference a
- * mock response object from the {@linkplain MockServiceManager}. To set a response object for a web
- * method, use the {@linkplain MockServiceManager#setResponse(String, Object)} method referencing
- * the appropriate web method constant from {@linkplain org.sola.services.boundary.wsclients.SearchClient}.</p>
+ * {@linkplain MockServiceManager} to obtain the appropriate mock response for
+ * each web method.
+ * <p>
+ * Each method mocked by this class has a public constant defined that can be
+ * used to reference a mock response object from the
+ * {@linkplain MockServiceManager}. To set a response object for a web method,
+ * use the {@linkplain MockServiceManager#setResponse(String, Object)} method
+ * referencing the appropriate web method constant from
+ * {@linkplain org.sola.services.boundary.wsclients.SearchClient}.</p>
  *
  * @see MockSearchClient
  * @see SearchClient
@@ -61,8 +65,9 @@ public class MockSearchPort implements Search {
     }
 
     /**
-     * Processes the mock response exception and throws the appropriate service exception or a
-     * MockResponseException if the response exception is not a recognized type.
+     * Processes the mock response exception and throws the appropriate service
+     * exception or a MockResponseException if the response exception is not a
+     * recognized type.
      *
      * @param ex The Mock response exception to process
      */
@@ -82,8 +87,10 @@ public class MockSearchPort implements Search {
     }
 
     /**
-     * Processes the mock response exception and throws the appropriate service exception or a
-     * MockResponseException if the response exception is not a recognized type. Extends {@linkplain #processExceptionBasic(java.lang.Exception) processExceptionBasic}
+     * Processes the mock response exception and throws the appropriate service
+     * exception or a MockResponseException if the response exception is not a
+     * recognized type. Extends
+     * {@linkplain #processExceptionBasic(java.lang.Exception) processExceptionBasic}
      * to include the SOLAAccessFault;
      *
      * @param ex The Mock response exception to process
@@ -437,8 +444,8 @@ public class MockSearchPort implements Search {
             return null;
         }
     }
-    
-     /**
+
+    /**
      * Response Key = SearchClient.GET_UNREGISTERED_DEALINGS
      *
      * @return default = new ArrayList<UnregisteredDealingTO>()
@@ -453,6 +460,19 @@ public class MockSearchPort implements Search {
         } catch (Exception ex) {
             processExceptionAccess(ex);
             return null;
+        }
+    }
+
+    @Override
+    public boolean showCoTReport(String baUnitId, boolean isProduction)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+        boolean defaultResponse = false;
+        try {
+            return getManager().getResponse(SearchClient.SHOW_COT_REPORT,
+                    Boolean.class, defaultResponse, baUnitId, isProduction);
+        } catch (Exception ex) {
+            processExceptionAccess(ex);
+            return false;
         }
     }
 }

@@ -50,8 +50,8 @@ import org.sola.services.ejb.search.spatial.QueryForSelect;
 import org.sola.services.ejb.search.spatial.ResultForSelectionInfo;
 
 /**
- * Web Service Boundary class to expose {@linkplain org.sola.services.ejb.search.businesslogic.SearchEJB}
- * methods.
+ * Web Service Boundary class to expose
+ * {@linkplain org.sola.services.ejb.search.businesslogic.SearchEJB} methods.
  */
 @WebService(serviceName = "search-service", targetNamespace = ServiceConstants.SEARCH_WS_NAMESPACE)
 public class Search extends AbstractWebService {
@@ -92,8 +92,8 @@ public class Search extends AbstractWebService {
 
             @Override
             public void run() {
-                PropertyVerifier propertyVerifier =
-                        searchEJB.getPropertyVerifier(applicationNumber, firstPart, lastPart);
+                PropertyVerifier propertyVerifier
+                        = searchEJB.getPropertyVerifier(applicationNumber, firstPart, lastPart);
                 result[0] = GenericTranslator.toTO(
                         propertyVerifier, PropertyVerifierTO.class);
             }
@@ -445,7 +445,7 @@ public class Search extends AbstractWebService {
                 if (searchParams != null) {
                     result[0] = GenericTranslator.toTOList(
                             searchEJB.searchBaUnits(GenericTranslator.fromTO(
-                            searchParams, BaUnitSearchParams.class, null)),
+                                    searchParams, BaUnitSearchParams.class, null)),
                             BaUnitSearchResultTO.class);
                 }
             }
@@ -515,11 +515,13 @@ public class Search extends AbstractWebService {
     /**
      * Retrieves the map layer configuration data
      *
-     * @param languageCode The language code to use for localization of display values
+     * @param languageCode The language code to use for localization of display
+     * values
      * @return The configuration data for each map layer
      * @throws UnhandledFault
      * @throws SOLAFault
-     * @see org.sola.services.ejb.search.businesslogic.SearchEJB#getMapSettingList()
+     * @see
+     * org.sola.services.ejb.search.businesslogic.SearchEJB#getMapSettingList()
      * @see
      * org.sola.services.ejb.search.businesslogic.SearchEJB#getConfigMapLayerList(java.lang.String)
      */
@@ -534,8 +536,8 @@ public class Search extends AbstractWebService {
             @Override
             public void run() {
                 HashMap<String, String> mapSettings = searchEJB.getMapSettingList();
-                List<ConfigMapLayer> configMapLayerList =
-                        searchEJB.getConfigMapLayerList(languageCodeTmp);
+                List<ConfigMapLayer> configMapLayerList
+                        = searchEJB.getConfigMapLayerList(languageCodeTmp);
                 MapDefinitionTO mapDefinition = new MapDefinitionTO();
                 mapDefinition.setSrid(Integer.parseInt(mapSettings.get("map-srid")));
                 mapDefinition.setWktOfCrs(mapSettings.get("wkt-of-crs"));
@@ -587,7 +589,7 @@ public class Search extends AbstractWebService {
     }
 
     /**
-     * See {@linkplain  org.sola.services.ejb.search.businesslogic.SearchEJB#getStrataProperties(java.lang.String, java.util.List) 
+     * See {@linkplain  org.sola.services.ejb.search.businesslogic.SearchEJB#getStrataProperties(java.lang.String, java.util.List)
      * SearchEJB.getStrataProperties}
      *
      * @throws SOLAFault
@@ -615,10 +617,10 @@ public class Search extends AbstractWebService {
         });
         return (List<StrataPropertyTO>) result[0];
     }
-    
+
     @WebMethod(operationName = "GetUnregisteredDealings")
     public List<UnregisteredDealingTO> getUnregisteredDealings(
-           @WebParam(name = "baUnitId") String baUnitId)
+            @WebParam(name = "baUnitId") String baUnitId)
             throws SOLAFault, UnhandledFault, SOLAAccessFault {
 
         final String baUnitIdTmp = baUnitId;
@@ -635,4 +637,25 @@ public class Search extends AbstractWebService {
         });
         return (List<UnregisteredDealingTO>) result[0];
     }
+
+    @WebMethod(operationName = "ShowCoTReport")
+    public boolean ShowCoTReport(@WebParam(name = "baUnitId") String baUnitId,
+            @WebParam(name = "isProduction") boolean isProduction)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final String baUnitIdTmp = baUnitId;
+        final boolean isProductionTmp = isProduction;
+        final boolean[] result = {false};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = searchEJB.showCoTReport(baUnitIdTmp, isProductionTmp);
+            }
+        });
+
+        return result[0];
+    }
+
 }

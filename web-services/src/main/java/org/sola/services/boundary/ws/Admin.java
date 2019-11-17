@@ -42,6 +42,8 @@ import org.sola.services.boundary.transferobjects.security.RoleTO;
 import org.sola.services.boundary.transferobjects.security.UserTO;
 import org.sola.services.boundary.transferobjects.system.BrTO;
 import org.sola.services.boundary.transferobjects.system.LanguageTO;
+import org.sola.services.boundary.transferobjects.system.PublicUserActivitySummaryParamsTO;
+import org.sola.services.boundary.transferobjects.system.PublicUserActivitySummaryTO;
 import org.sola.services.boundary.transferobjects.system.PublicUserActivityTO;
 import org.sola.services.boundary.transferobjects.system.SettingTO;
 import org.sola.services.common.ServiceConstants;
@@ -57,7 +59,8 @@ import org.sola.services.ejbs.admin.businesslogic.repository.entities.Role;
 import org.sola.services.ejbs.admin.businesslogic.repository.entities.User;
 
 /**
- * Provides methods for administrators to manage users, reference data and system settings.
+ * Provides methods for administrators to manage users, reference data and
+ * system settings.
  */
 @WebService(serviceName = "admin-service", targetNamespace = ServiceConstants.ADMIN_WS_NAMESPACE)
 public class Admin extends AbstractWebService {
@@ -366,7 +369,6 @@ public class Admin extends AbstractWebService {
     public RoleTO SaveRole(@WebParam(name = "roleTO") RoleTO roleTO)
             throws SOLAFault, UnhandledFault, SOLAAccessFault, OptimisticLockingFault {
 
-
         final RoleTO roleTOTmp = roleTO;
         final Object[] result = {null};
 
@@ -546,7 +548,7 @@ public class Admin extends AbstractWebService {
 
         return result[0];
     }
-    
+
     /**
      * See {@linkplain org.sola.services.ejb.system.businesslogic.SystemEJB#saveBr(org.sola.services.ejb.system.repository.entities.Br)
      * SystemEJB.saveBr}
@@ -576,5 +578,26 @@ public class Admin extends AbstractWebService {
         });
 
         return (PublicUserActivityTO) result[0];
+    }
+
+    @WebMethod(operationName = "GetPublicUserActivitySummary")
+    public List<PublicUserActivitySummaryTO> GetPublicUserActivitySummary(
+            @WebParam(name = "puaSummaryParams") PublicUserActivitySummaryParamsTO params)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault {
+
+        final PublicUserActivitySummaryParamsTO[] paramsTmp = {params};
+        final Object[] result = {null};
+
+        runGeneralQuery(wsContext, new Runnable() {
+
+            @Override
+            public void run() {
+                result[0] = GenericTranslator.toTOList(
+                        systemEJB.getPublicUserActivitySummary(paramsTmp[0].getFromDate(), paramsTmp[0].getToDate(),
+                                paramsTmp[0].getPublicUser()), PublicUserActivitySummaryTO.class);
+            }
+        });
+
+        return (List<PublicUserActivitySummaryTO>) result[0];
     }
 }

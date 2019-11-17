@@ -27,6 +27,7 @@
  */
 package org.sola.services.boundary.wsclients;
 
+import java.util.Date;
 import java.util.List;
 import javax.xml.namespace.QName;
 import org.sola.services.boundary.wsclients.exception.WebServiceClientException;
@@ -350,6 +351,21 @@ public class AdminClientImpl extends AbstractWSClientImpl implements AdminClient
             processException(methodName, e);
         } finally {
             afterWebMethod(methodName, result, publicUserActivityTO);
+        }
+        return result;
+    }
+    
+    @Override
+    public List<PublicUserActivitySummaryTO> getPublicUserActivitySummary(PublicUserActivitySummaryParamsTO params) throws WebServiceClientException  {
+        List<PublicUserActivitySummaryTO> result = null; 
+        final String methodName = AdminClient.GET_PUBLIC_USER_ACTIVITY_SUMMARY;
+        try {
+            beforeWebMethod(methodName, params);
+            result = getPort().getPublicUserActivitySummary(params); 
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, result, params);
         }
         return result;
     }
