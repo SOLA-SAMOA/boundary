@@ -374,7 +374,7 @@ public class MockAdministrativePort implements Administrative {
      * @return void
      */
     @Override
-    public void terminateStrataProperties(String serviceId, String unitParcelGroupName, 
+    public void terminateStrataProperties(String serviceId, String unitParcelGroupName,
             List<String> baUnitIds)
             throws OptimisticLockingFault, SOLAAccessFault, SOLAFault, UnhandledFault {
         try {
@@ -384,8 +384,8 @@ public class MockAdministrativePort implements Administrative {
             processExceptionUpdate(ex);
         }
     }
-    
-        /**
+
+    /**
      * Response Key = AdministrativeClient.UNDO_TERMINATE_STRATA_PROPERTIES
      *
      * @return void
@@ -396,6 +396,22 @@ public class MockAdministrativePort implements Administrative {
         try {
             getManager().getResponse(AdministrativeClient.UNDO_TERMINATE_STRATA_PROPERTIES,
                     Void.class, null, serviceId, baUnitIds);
+        } catch (Exception ex) {
+            processExceptionUpdate(ex);
+        }
+    }
+
+    /**
+     * Response Key = AdministrativeClient.MAKE_PROPERTY_CURRENT
+     *
+     * @return void
+     */
+    @Override
+    public void makePropertyCurrent(String baUnitId)
+            throws OptimisticLockingFault, SOLAAccessFault, SOLAFault, UnhandledFault {
+        try {
+            getManager().getResponse(AdministrativeClient.MAKE_PROPERTY_CURRENT,
+                    Void.class, null, baUnitId);
         } catch (Exception ex) {
             processExceptionUpdate(ex);
         }

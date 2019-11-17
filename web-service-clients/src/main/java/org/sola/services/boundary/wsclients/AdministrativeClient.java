@@ -115,6 +115,10 @@ public interface AdministrativeClient extends AbstractWSClient {
      * Administrative.undoTerminateStrataProperties - Identifier for the undoTerminateStrataProperties method
      */
     public static final String UNDO_TERMINATE_STRATA_PROPERTIES = SERVICE_NAME + "undoTerminateStrataProperties";
+    /*
+     * Administrative.makePropertyCurrent - Identifier for the makePropertyCurrent method
+     */
+    public static final String MAKE_PROPERTY_CURRENT = SERVICE_NAME + "makePropertyCurrent";
 
     /**
      * Creates a new BA Unit Area for a BaUnitId
@@ -295,4 +299,15 @@ public interface AdministrativeClient extends AbstractWSClient {
      */
     void undoTerminateStrataProperties(String serviceId, List<String> baUnitIds)
             throws WebServiceClientException;
+    
+    
+    /**
+     * Version 1911a. Update the status of this deed property from historic to
+     * current.  <p>
+     * Requires the {@linkplain RolesConstants#ADMINISTRATIVE_MAKE_PROP_CURRENT}
+     * role.</p>
+     *
+     * @param baUnitId - ID of the property to update the status of
+     */
+    void makePropertyCurrent(String baUnitId) throws WebServiceClientException;
 }

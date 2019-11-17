@@ -257,7 +257,7 @@ public class AdministrativeClientImpl extends AbstractWSClientImpl
     }
 
     @Override
-    public void terminateStrataProperties(String serviceId, String unitParcelGroupName, 
+    public void terminateStrataProperties(String serviceId, String unitParcelGroupName,
             List<String> baUnitIds) throws WebServiceClientException {
         final String methodName = AdministrativeClient.TERMINATE_STRATA_PROPERTIES;
         try {
@@ -281,6 +281,19 @@ public class AdministrativeClientImpl extends AbstractWSClientImpl
             processException(methodName, e);
         } finally {
             afterWebMethod(methodName, null, serviceId, baUnitIds);
+        }
+    }
+
+    @Override
+    public void makePropertyCurrent(String baUnitId) throws WebServiceClientException {
+        final String methodName = AdministrativeClient.MAKE_PROPERTY_CURRENT;
+        try {
+            beforeWebMethod(methodName, baUnitId);
+            getPort().makePropertyCurrent(baUnitId);
+        } catch (Exception e) {
+            processException(methodName, e);
+        } finally {
+            afterWebMethod(methodName, null, baUnitId);
         }
     }
 }

@@ -502,4 +502,29 @@ public class Administrative extends AbstractWebService {
             }
         });
     }
+    
+    
+    /**
+     * See {{@linkplain AdministrativeEJB#makePropertyCurrent(java.lang.String)
+     * AdministrativeEJB.makePropertyCurrent}
+     * @param baUnitId
+     * @throws SOLAFault
+     * @throws UnhandledFault
+     * @throws SOLAAccessFault
+     * @throws OptimisticLockingFault 
+     */
+    @WebMethod(operationName = "MakePropertyCurrent")
+    public void MakePropertyCurrent(
+            @WebParam(name = "baUnitId") String baUnitId)
+            throws SOLAFault, UnhandledFault, SOLAAccessFault, OptimisticLockingFault {
+
+        final String baUnitIdTmp = baUnitId;
+
+        runUpdate(wsContext, new Runnable() {
+            @Override
+            public void run() {
+                administrativeEJB.makePropertyCurrent(baUnitIdTmp);
+            }
+        });
+    }
 }
