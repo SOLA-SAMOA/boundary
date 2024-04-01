@@ -70,9 +70,10 @@
                 by Netbeans and the project will display without the Web Service Reference folder.
                 To access the Web Service Reference folder in Netbeans, see the commented out 
                 section below. -->
-                <groupId>org.jvnet.jax-ws-commons</groupId>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
-                <version>2.3</version>
+                <!--version>2.3</version-->
+                <version>2.6</version>
                 <configuration>   
                     <wsdlDirectory>${basedir}/../wsdl</wsdlDirectory>
                     <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
@@ -402,6 +403,18 @@
             <name>JBoss Public Maven Repository Group</name>
             <url>https://repository.jboss.org/nexus/content/groups/public</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
     </pluginRepositories>
     <repositories>
         <repository>
@@ -419,6 +432,15 @@
             <id>spring-ext</id>
             <name>Spring Repository Extension</name>
             <url>https://springframework.svn.sourceforge.net/svnroot/springframework/repos/repo-ext/</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 </project>
